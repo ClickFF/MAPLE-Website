@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Report an Issue - MAPLE</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <main>
+        <div class="content-wrapper">
+            <aside class="navigation-section">
+                <a href="index.html"><img src="logo.jpg" alt="MAPLE Logo" style="width: 80px; height: 80px; object-fit: contain; display: block; margin-bottom: 1.5rem; cursor: pointer; background: transparent; border: none;"></a>
+                <h2>Navigation</h2>
+                <ul class="nav-list">
+                    <li><a href="#tutorials">User Guide</a></li>
+                    <li><a href="general.html">About MAPLE</a></li>
+                    <li><a href="documentation.html">Documentation</a></li>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="#articles">Articles</a></li>
+                    <li><a href="#download">Downloads</a></li>
+                    <li><a href="issues.html">Report an issue</a></li>
+                    <li><a href="#development">Development</a></li>
+                </ul>
+            </aside>
+
+            <div class="main-content">
+                <section class="welcome-section">
+                    <h1>Report an Issue</h1>
+                    <p class="tagline">Help us improve MAPLE by reporting bugs, requesting features, or asking questions.</p>
+                </section>
+
+                <section class="new-section">
+                    <p>We welcome feedback from the MAPLE community! If you encounter a bug, have a feature request, or need help, please report it on our GitHub repository. This ensures that all issues are tracked, visible to other users, and can be addressed efficiently by the development team.</p>
+                    <p><strong><a href="https://github.com/ClickFF/MAPLE-Website" target="_blank" rel="noopener noreferrer">Open an issue on GitHub →</a></strong></p>
+                </section>
+
+                <section class="new-section">
+                    <h2>How to Report an Issue on GitHub</h2>
+                    <p>Follow these step-by-step instructions to create a clear and helpful issue report:</p>
+                    
+                    <h3>Step 1: Navigate to the Issues Page</h3>
+                    <ol>
+                        <li>Visit the <a href="https://github.com/ClickFF/MAPLE-Website" target="_blank" rel="noopener noreferrer">MAPLE GitHub repository</a>.</li>
+                        <li>Click on the <strong>"Issues"</strong> tab at the top of the repository page.</li>
+                        <li>Click the green <strong>"New Issue"</strong> button.</li>
+                    </ol>
+
+                    <h3>Step 2: Choose the Issue Type</h3>
+                    <p>GitHub may provide issue templates. If available, choose the most appropriate one:</p>
+                    <ul>
+                        <li><strong>Bug Report</strong>: For reporting unexpected behavior, crashes, or errors.</li>
+                        <li><strong>Feature Request</strong>: For suggesting new functionality or improvements.</li>
+                        <li><strong>Question</strong>: For asking about usage, documentation, or general inquiries.</li>
+                    </ul>
+                    <p>If no templates are available, you can still create a blank issue.</p>
+
+                    <h3>Step 3: Fill in the Issue Title</h3>
+                    <p>Write a clear, concise title that summarizes the problem or request. Good titles are specific and descriptive.</p>
+                    <p class="code-example">Examples:<br>
+                    ✓ "Segmentation fault during optimization with ANI-2x model"<br>
+                    ✓ "Add support for XYZ file format in batch processing"<br>
+                    ✗ "MAPLE doesn't work"<br>
+                    ✗ "Help needed"</p>
+
+                    <h3>Step 4: Provide Detailed Information</h3>
+                    <p>Include the following information to help us understand and reproduce your issue:</p>
+                    
+                    <h4>For Bug Reports:</h4>
+                    <ul>
+                        <li><strong>Description</strong>: Clear explanation of what happened versus what you expected.</li>
+                        <li><strong>Steps to Reproduce</strong>: 
+                            <ol>
+                                <li>Step-by-step instructions to reproduce the bug</li>
+                                <li>Include input file contents or commands used</li>
+                            </ol>
+                        </li>
+                        <li><strong>Environment</strong>:
+                            <ul>
+                                <li>Operating System (e.g., Linux Ubuntu 22.04, Windows 11, macOS 14)</li>
+                                <li>Python version (if applicable)</li>
+                                <li>MAPLE version</li>
+                                <li>Hardware (CPU/GPU model if relevant)</li>
+                            </ul>
+                        </li>
+                        <li><strong>Error Messages</strong>: Copy and paste the full error message or stack trace</li>
+                        <li><strong>Input Files</strong>: Attach or paste relevant input files (.inp files, coordinates, etc.)</li>
+                        <li><strong>Output Files</strong>: If applicable, attach relevant output files or logs</li>
+                    </ul>
+
+                    <h4>For Feature Requests:</h4>
+                    <ul>
+                        <li><strong>Problem Statement</strong>: Describe the limitation or missing functionality</li>
+                        <li><strong>Proposed Solution</strong>: Explain how you envision the feature working</li>
+                        <li><strong>Use Case</strong>: Provide examples of how this feature would be useful</li>
+                        <li><strong>Alternatives</strong>: Describe any workarounds you're currently using</li>
+                    </ul>
+
+                    <h4>For Questions:</h4>
+                    <ul>
+                        <li><strong>Question</strong>: Clearly state what you want to know</li>
+                        <li><strong>Context</strong>: Provide relevant details about your use case</li>
+                        <li><strong>What You've Tried</strong>: Describe any attempts you've made to find the answer</li>
+                    </ul>
+
+                    <h3>Step 5: Format Your Issue</h3>
+                    <p>GitHub supports Markdown formatting. Use it to make your issue readable:</p>
+                    <ul>
+                        <li>Use <code>`code`</code> for inline code or file names</li>
+                        <li>Use <code>```language</code> blocks for code snippets</li>
+                        <li>Use <strong>**bold**</strong> for emphasis</li>
+                        <li>Use numbered lists for steps and bullet points for items</li>
+                        <li>Use headings to organize sections</li>
+                    </ul>
+                    <p>Example formatted code block:</p>
+                    <p class="code-example">```python<br>#model=ani2x<br>#opt(method=lbfgs)<br>#device=cuda</p>
+
+                    <h3>Step 6: Add Labels (Optional)</h3>
+                    <p>If you have permission, add relevant labels such as:</p>
+                    <ul>
+                        <li><code>bug</code>, <code>feature-request</code>, <code>question</code></li>
+                        <li><code>documentation</code>, <code>performance</code>, <code>enhancement</code></li>
+                    </ul>
+                    <p>If you don't have permission to add labels, don't worry—maintainers will add appropriate labels.</p>
+
+                    <h3>Step 7: Preview and Submit</h3>
+                    <ol>
+                        <li>Click the <strong>"Preview"</strong> tab to review how your issue will appear</li>
+                        <li>Check for typos and formatting issues</li>
+                        <li>Ensure all necessary information is included</li>
+                        <li>Click <strong>"Submit new issue"</strong> when ready</li>
+                    </ol>
+
+                    <h3>Step 8: Follow Up</h3>
+                    <ul>
+                        <li>Check your email for notifications about responses to your issue</li>
+                        <li>Respond promptly to questions or requests for additional information</li>
+                        <li>Update the issue if you find additional relevant information</li>
+                        <li>Close the issue if your problem is resolved or if you find a solution elsewhere</li>
+                    </ul>
+                </section>
+
+                <section class="new-section">
+                    <h2>Best Practices for Issue Reporting</h2>
+                    <ul>
+                        <li><strong>Search first</strong>: Check if a similar issue already exists before creating a new one. You can add your information as a comment to an existing issue.</li>
+                        <li><strong>Be specific</strong>: Provide exact error messages, version numbers, and step-by-step reproduction instructions.</li>
+                        <li><strong>Minimize examples</strong>: If possible, reduce your input to the smallest case that still reproduces the issue.</li>
+                        <li><strong>Be respectful</strong>: Remember that developers are volunteers or working within limited resources. Polite, constructive feedback is always appreciated.</li>
+                        <li><strong>Update issues</strong>: If you find a solution or the issue is resolved, let us know!</li>
+                        <li><strong>One issue per report</strong>: Create separate issues for different problems to keep discussions focused.</li>
+                    </ul>
+                </section>
+
+                <section class="new-section">
+                    <h2>Issue Templates Example</h2>
+                    <p>Here's an example of a well-formatted bug report:</p>
+                    <p class="code-example">
+<strong>Description</strong><br>
+MAPLE crashes with segmentation fault when running optimization with ANI-2x model on GPU.<br><br>
+
+<strong>Steps to Reproduce</strong><br>
+1. Create input file with #model=ani2x, #opt(method=lbfgs), #device=gpu0<br>
+2. Run MAPLE with the input file<br>
+3. Segmentation fault occurs after 15 iterations<br><br>
+
+<strong>Expected Behavior</strong><br>
+Optimization should complete successfully.<br><br>
+
+<strong>Environment</strong><br>
+- OS: Ubuntu 22.04 LTS<br>
+- Python: 3.10.12<br>
+- MAPLE version: 2025.1<br>
+- GPU: NVIDIA RTX 3090, CUDA 11.8<br>
+- Driver version: 525.105.17<br><br>
+
+<strong>Error Message</strong><br>
+Segmentation fault (core dumped)<br><br>
+
+<strong>Input File</strong><br>
+[Attach or paste input file here]
+                    </p>
+                </section>
+
+                <section class="new-section">
+                    <h2>Need Help Creating an Account?</h2>
+                    <p>If you don't have a GitHub account yet, you'll need to create one:</p>
+                    <ol>
+                        <li>Go to <a href="https://github.com/signup" target="_blank" rel="noopener noreferrer">github.com/signup</a></li>
+                        <li>Enter your email address and choose a username and password</li>
+                        <li>Verify your email address</li>
+                        <li>Complete the account setup (you may be asked to verify you're human)</li>
+                        <li>Return to the MAPLE repository to create your issue</li>
+                    </ol>
+                </section>
+
+                <section class="new-section">
+                    <h2>Direct Link to Create an Issue</h2>
+                    <p>Ready to report an issue? Click the link below to go directly to the new issue page:</p>
+                    <p><strong><a href="https://github.com/ClickFF/MAPLE-Website/issues/new" target="_blank" rel="noopener noreferrer" style="font-size: 1.2em;">Create a New Issue on GitHub →</a></strong></p>
+                </section>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2025, MAPLE development team.</p>
+    </footer>
+</body>
+</html>
