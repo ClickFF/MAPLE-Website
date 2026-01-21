@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Downloads - MAPLE</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <main>
+        <div class="content-wrapper">
+            <aside class="navigation-section">
+                <a href="index.html"><img src="logo.jpg" alt="MAPLE Logo" style="width: 80px; height: 80px; object-fit: contain; display: block; margin-bottom: 1.5rem; cursor: pointer; background: transparent; border: none;"></a>
+                <h2>Navigation</h2>
+                <ul class="nav-list">
+                    <li><a href="#tutorials">User Guide</a></li>
+                    <li><a href="general.html">About MAPLE</a></li>
+                    <li><a href="documentation.html">Documentation</a></li>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="articles.html">Articles</a></li>
+                    <li><a href="downloads.html">Downloads</a></li>
+                    <li><a href="#issues">Report an issue</a></li>
+                    <li><a href="#development">Development</a></li>
+                </ul>
+            </aside>
+
+            <div class="main-content">
+                <section class="welcome-section">
+                    <h1>Downloads</h1>
+                    <p class="tagline">Get MAPLE from our GitHub repository and follow the installation instructions below.</p>
+                </section>
+
+                <section class="new-section">
+                    <p><strong><a href="https://github.com/ClickFF/MAPLE" target="_blank" rel="noopener noreferrer">Download MAPLE from GitHub →</a></strong></p>
+                </section>
+
+                <section class="new-section">
+                    <h2>Installation</h2>
+                    
+                    <h3>Requirements</h3>
+                    <ul>
+                        <li>Python ≥ 3.9</li>
+                        <li>CUDA-capable GPU (recommended for ML models)</li>
+                    </ul>
+
+                    <h3>Install MAPLE</h3>
+                    <p class="code-example">
+# Clone the repository<br>
+git clone https://github.com/ClickFF/MAPLE.git<br>
+cd MAPLE<br>
+<br>
+# Install in development mode<br>
+pip install -e .
+                    </p>
+
+                    <h3>Install Dependencies</h3>
+                    <p>MAPLE requires several scientific computing and machine learning packages:</p>
+                    
+                    <h4>Core dependencies (required)</h4>
+                    <p class="code-example">
+conda install -c conda-forge numpy scipy matplotlib ase
+                    </p>
+
+                    <h4>PyTorch</h4>
+                    <p>Install PyTorch based on your system configuration:</p>
+                    <p class="code-example">
+# For CUDA 11.8:<br>
+pip install torch --index-url https://download.pytorch.org/whl/cu118<br>
+<br>
+# For CPU only:<br>
+pip install torch --index-url https://download.pytorch.org/whl/cpu
+                    </p>
+
+                    <h4>Machine learning potentials</h4>
+                    <p class="code-example">
+pip install fairchem-core  # For AIMNet2 and ANI models
+                    </p>
+                </section>
+
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2025, MAPLE development team.</p>
+    </footer>
+</body>
+</html>
