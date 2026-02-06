@@ -7,21 +7,54 @@
     <link rel="stylesheet" href="../../styles.css">
 </head>
 <body>
+    <header class="top-nav">
+        <div class="container">
+            <div class="brand">
+                <a href="../../index.html"><img src="../../logo.jpg" alt="MAPLE Logo"></a>
+                <a href="../../index.html">MAPLE</a>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="../../index.html">Home</a></li>
+                    <li><a href="../../general.html">About MAPLE</a></li>
+                    <li><a href="../../documentation.html">User Guide</a></li>
+                    <li><a href="../../articles.html">Articles</a></li>
+                    <li><a href="../../downloads.html">Downloads</a></li>
+                    <li><a href="../../issues.html">Report an issue</a></li>
+                    <li><a href="../../development.html">Development</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
     <main>
         <div class="content-wrapper">
             <aside class="navigation-section">
                 <a href="../../index.html"><img src="../../logo.jpg" alt="MAPLE Logo" style="width: 80px; height: 80px; object-fit: contain; display: block; margin-bottom: 1.5rem; cursor: pointer; background: transparent; border: none;"></a>
-                <h2>Navigation</h2>
-                <ul class="nav-list">
-                    <li><a href="#tutorials">User Guide</a></li>
-                    <li><a href="../../general.html">About MAPLE</a></li>
-                    <li><a href="../../documentation.html">Documentation</a></li>
-                    <li><a href="../../index.html">Home</a></li>
-                    <li><a href="#articles">Articles</a></li>
-                    <li><a href="#download">Downloads</a></li>
-                    <li><a href="#issues">Report an issue</a></li>
-                    <li><a href="#development">Development</a></li>
-                </ul>
+                <div class="doc-tree">
+                    <ul>
+                        <li class="open">
+                            <span class="toggle">Getting Started</span>
+                            <ul class="children">
+                                <li><a href="../../documentation.html#installation">Installation Guide</a></li>
+                                <li class="open">
+                                    <span class="toggle">Quick Start Tutorial</span>
+                                    <ul class="children">
+                                        <li class="open">
+                                            <a href="irc.html" class="active">IRC</a>
+                                            <ul class="children" style="display:block;">
+                                                <li><a href="irc_gs.html">GS</a></li>
+                                                <li><a href="irc_lqa.html">LQA</a></li>
+                                                <li><a href="irc_hpc.html">HPC</a></li>
+                                                <li><a href="irc_eulerpc.html">EulerPC</a></li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
             </aside>
 
             <div class="main-content">
@@ -30,7 +63,7 @@
                 </section>
 
                 <section class="new-section">
-                    <p>The IRC module computes the intrinsic reaction path starting from a transition-state (TS) geometry by following the steepest-descent direction defined by the TS's unique imaginary vibrational mode. This mode corresponds to the negative eigenvalue of the mass-weighted Hessian and provides the correct reaction coordinate. The module currently supports one algorithm: the <span style="color: #ff0000;"><a href="functions/irc/irc_gs.html">gs</a></span> (Gradient Stepping) method.</p>
+                    <p>The IRC module computes the intrinsic reaction path starting from a transition-state (TS) geometry by following the steepest-descent direction defined by the TS's unique imaginary vibrational mode. This mode corresponds to the negative eigenvalue of the mass-weighted Hessian and provides the correct reaction coordinate. The module currently supports one algorithm: the <span style="color: #ff0000;"><a href="irc_gs.html">gs</a></span> (Gradient Stepping) method.</p>
                 </section>
 
                 <section class="new-section">
@@ -62,6 +95,11 @@
                     <p><code>  0    -382.552193      0.00        0.003218   0.001205</code></p>
                     <p><code>  1    -382.557801     -3.52        0.002145   0.000734</code></p>
                 </section>
+
+                <nav class="article-nav" style="display:flex; justify-content:space-between; margin-top:2rem;">
+                    <a href="../../documentation.html">&larr; Back to User Guide</a>
+                    <a href="irc_gs.html">Next: GS &rarr;</a>
+                </nav>
             </div>
         </div>
     </main>
