@@ -4,13 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>About MAPLE - General Introduction</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="assets/css/styles.css">
 </head>
 <body>
     <header class="top-nav">
         <div class="container">
             <div class="brand">
-                <a href="index.html"><img src="logo.jpg" alt="MAPLE Logo"></a>
+                <a href="index.html"><img src="assets/images/logo.jpg" alt="MAPLE Logo"></a>
                 <a href="index.html">MAPLE</a>
             </div>
             <nav>
@@ -44,12 +44,12 @@
                     <h2>Supported Job Types</h2>
                     <p>MAPLE currently supports the following major job types:</p>
                     <ul>
-                        <li><strong><a href="Tasks/singlepoint.html">Single Point</a></strong>: Compute molecular energies and related properties at fixed geometries.</li>
-                        <li><strong><a href="Tasks/opt/optimization.html">Optimization</a></strong>: Locate equilibrium geometries based on user-defined convergence criteria.</li>
-                        <li><strong><a href="Tasks/scan/scan.htm">Scan</a></strong>: Map potential energy changes along specified structural coordinates.</li>
+                        <li><strong><a href="tasks/singlepoint.html">Single Point</a></strong>: Compute molecular energies and related properties at fixed geometries.</li>
+                        <li><strong><a href="tasks/opt/optimization.html">Optimization</a></strong>: Locate equilibrium geometries based on user-defined convergence criteria.</li>
+                        <li><strong><a href="tasks/scan/scan.html">Scan</a></strong>: Map potential energy changes along specified structural coordinates.</li>
                         <li><strong>Frequency</strong>: Calculate vibrational frequencies and thermodynamic corrections.</li>
-                        <li><strong><a href="Tasks/ts/ts.html">Transition State</a></strong>: Search for reaction saddle points using various algorithms.</li>
-                        <li><strong><a href="Tasks/irc/irc.html">IRC</a></strong>: Trace the intrinsic reaction coordinate connecting reactants and products through a transition state.</li>
+                        <li><strong><a href="tasks/ts/ts.html">Transition State</a></strong>: Search for reaction saddle points using various algorithms.</li>
+                        <li><strong><a href="tasks/irc/irc.html">IRC</a></strong>: Trace the intrinsic reaction coordinate connecting reactants and products through a transition state.</li>
                     </ul>
                     <p>All modules in MAPLE maintain consistent input structure, parameter naming, and output format, allowing users to efficiently switch between different computational tasks.</p>
                 </section>
@@ -77,13 +77,13 @@
                     <p class="code-example">Example: #d4 = true<br>#d4 = false<br>#d4 (equivalent to #d4 = true)</p>
 
                     <h3>Task type configuration</h3>
-                    <p>We support several computational tasks, including <strong><a href="Tasks/singlepoint.html">sp</a></strong> (Single Point), <strong><a href="Tasks/opt/optimization.html">opt</a></strong> (Optimization), <strong><a href="Tasks/scan/scan.htm">scan</a></strong> (Scan), <strong>freq</strong> (Frequency), <strong><a href="Tasks/ts/ts.html">ts</a></strong> (Transition State), and <strong><a href="Tasks/irc/irc.html">irc</a></strong> (IRC).</p>
+                    <p>We support several computational tasks, including <strong><a href="tasks/singlepoint.html">sp</a></strong> (Single Point), <strong><a href="tasks/opt/optimization.html">opt</a></strong> (Optimization), <strong><a href="tasks/scan/scan.html">scan</a></strong> (Scan), <strong>freq</strong> (Frequency), <strong><a href="tasks/ts/ts.html">ts</a></strong> (Transition State), and <strong><a href="tasks/irc/irc.html">irc</a></strong> (IRC).</p>
                     <p>Task Syntax: <strong>#taskname(parameters)</strong> A task is invoked by writing the task keyword after "#", and parameter values (if any) are set inside parentheses.</p>
                     <p class="code-example">Example: #opt(method=lbfgs, convergence=1e-5)</p>
                     <p><strong>Note:</strong></p>
                     <ul>
                         <li>If only the task name is given and no parameters are provided, the program automatically uses the default parameter set for that job type. Example: #ts</li>
-                        <li>If the input file does not define any task type, MAPLE automatically performs a <a href="Tasks/singlepoint.html">single point</a> energy calculation (sp) using the default settings.</li>
+                        <li>If the input file does not define any task type, MAPLE automatically performs a <a href="tasks/singlepoint.html">single point</a> energy calculation (sp) using the default settings.</li>
                     </ul>
                     <h3>Solvent - #solv</h3>
                     <p>#solv is used in MAPLE to activate solvent treatment. This directive enables either implicit solvent modeling or the construction of explicit solvation environments. For detailed descriptions of available modes, parameters, and usage examples, please refer to the Solvent section.</p>

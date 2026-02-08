@@ -4,13 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Optimization - MAPLE</title>
-    <link rel="stylesheet" href="../../styles.css">
+    <link rel="stylesheet" href="../../assets/css/styles.css">
 </head>
 <body>
     <main>
         <div class="content-wrapper">
             <aside class="navigation-section">
-                <a href="../../index.html"><img src="../../logo.jpg" alt="MAPLE Logo" style="width: 80px; height: 80px; object-fit: contain; display: block; margin-bottom: 1.5rem; cursor: pointer; background: transparent; border: none;"></a>
+                <a href="../../index.html"><img src="../../assets/images/logo.jpg" alt="MAPLE Logo" style="width: 80px; height: 80px; object-fit: contain; display: block; margin-bottom: 1.5rem; cursor: pointer; background: transparent; border: none;"></a>
                 <h2>Navigation</h2>
                 <ul class="nav-list">
                     <li><a href="#tutorials">User Guide</a></li>
@@ -32,7 +32,7 @@
                 <section class="new-section">
                     <p>The Optimization (OPT) module performs geometry optimization to locate a stationary point on the potential energy surface.
                         Starting from an initial molecular structure, the algorithm iteratively updates atomic positions to reduce the forces acting on the atoms until the predefined convergence criteria are satisfied.
-                        The optimization process minimizes the forces acting on the atoms, typically using algorithms such as <strong><a href="opt_LBFGS.html">LBFGS</a></strong> (Limited-memory Broyden-Fletcher-Goldfarb–Shanno), <strong><a href="opt_RFO.html">RFO</a></strong> (Rational Function Optimization), or <strong><a href="opt_SD.html">SD</a></strong> (Steepest Descent).</p>
+                        The optimization process minimizes the forces acting on the atoms, typically using algorithms such as <strong><a href="opt_lbfgs.html">LBFGS</a></strong> (Limited-memory Broyden-Fletcher-Goldfarb–Shanno), <strong><a href="opt_rfo.html">RFO</a></strong> (Rational Function Optimization), or <strong><a href="opt_SD.html">SD</a></strong> (Steepest Descent).</p>
                 </section>
 
                 <section class="new-section">
@@ -44,8 +44,8 @@
                     <h3>method</h3>
                     <p>Optimization algorithm:</p>
                     <ul>
-                        <li>= <strong><a href="opt_LBFGS.html">lbfgs</a></strong> (default)</li>
-                        <li>= <strong><a href="opt_RFO.html">rfo</a></strong></li>
+                        <li>= <strong><a href="opt_lbfgs.html">lbfgs</a></strong> (default)</li>
+                        <li>= <strong><a href="opt_rfo.html">rfo</a></strong></li>
                         <li>= <strong><a href="opt_SD.html">sd</a></strong> (no additional parameters)</li>
                     </ul>
 

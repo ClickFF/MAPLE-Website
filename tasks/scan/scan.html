@@ -4,13 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Scan - MAPLE</title>
-    <link rel="stylesheet" href="../../styles.css">
+    <link rel="stylesheet" href="../../assets/css/styles.css">
 </head>
 <body>
     <main>
         <div class="content-wrapper">
             <aside class="navigation-section">
-                <a href="../../index.html"><img src="../../logo.jpg" alt="MAPLE Logo" style="width: 80px; height: 80px; object-fit: contain; display: block; margin-bottom: 1.5rem; cursor: pointer; background: transparent; border: none;"></a>
+                <a href="../../index.html"><img src="../../assets/images/logo.jpg" alt="MAPLE Logo" style="width: 80px; height: 80px; object-fit: contain; display: block; margin-bottom: 1.5rem; cursor: pointer; background: transparent; border: none;"></a>
                 <h2>Navigation</h2>
                 <ul class="nav-list">
                     <li><a href="#tutorials">User Guide</a></li>
@@ -30,7 +30,7 @@
                 </section>
 
                 <section class="new-section">
-                    <p>The Scan module performs constrained potential energy scans in internal coordinates by systematically varying selected bond distances, bond angles, and dihedral angles around a reference geometry. For each user-defined scan coordinate, the module constructs a sequence of target values (based on atom indices, step size, and number of steps), then forms the full multidimensional grid via the Cartesian product of these sequences. At every grid point, the corresponding internal coordinates are enforced using internal-coordinate constraints, and a constrained geometry optimization is carried out to relax all remaining degrees of freedom, yielding a discrete mapping of the potential energy surface suitable for torsional profiles and reaction-path exploration. The module supports gradient-based constrained optimization with three algorithms: <strong><a href="scan_lbfgs.htm">LBFGS</a></strong> as the default workhorse, <strong>CG</strong> (Conjugate Gradient) as an alternative first-order method, and <strong><a href="scan_rfo.htm">RFO</a></strong> (Rational Function Optimization) as a Hessian-based option suitable for refining structures near stationary points.</p>
+                    <p>The Scan module performs constrained potential energy scans in internal coordinates by systematically varying selected bond distances, bond angles, and dihedral angles around a reference geometry. For each user-defined scan coordinate, the module constructs a sequence of target values (based on atom indices, step size, and number of steps), then forms the full multidimensional grid via the Cartesian product of these sequences. At every grid point, the corresponding internal coordinates are enforced using internal-coordinate constraints, and a constrained geometry optimization is carried out to relax all remaining degrees of freedom, yielding a discrete mapping of the potential energy surface suitable for torsional profiles and reaction-path exploration. The module supports gradient-based constrained optimization with three algorithms: <strong><a href="scan_lbfgs.html">LBFGS</a></strong> as the default workhorse, <strong>CG</strong> (Conjugate Gradient) as an alternative first-order method, and <strong><a href="scan_rfo.html">RFO</a></strong> (Rational Function Optimization) as a Hessian-based option suitable for refining structures near stationary points.</p>
                 </section>
 
                 <section class="new-section">
@@ -40,9 +40,9 @@
                     <h3>method</h3>
                     <p>Choose the geometry optimization algorithm for each constrained scan point:</p>
                     <ul>
-                        <li>= <strong><a href="scan_lbfgs.htm">lbfgs</a></strong> (default)</li>
+                        <li>= <strong><a href="scan_lbfgs.html">lbfgs</a></strong> (default)</li>
                         <li>= <strong>cg</strong></li>
-                        <li>= <strong><a href="scan_rfo.htm">rfo</a></strong></li>
+                        <li>= <strong><a href="scan_rfo.html">rfo</a></strong></li>
                     </ul>
                 </section>
 
