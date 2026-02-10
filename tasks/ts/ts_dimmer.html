@@ -1,144 +1,296 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Transition State Method: Dimer - MAPLE</title>
-    <link rel="stylesheet" href="../../assets/css/styles.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dimer Method - MAPLE</title>
+  <link rel="stylesheet" href="../../assets/css/styles.css">
 </head>
 <body>
-    <main>
-        <div class="content-wrapper">
-            <aside class="navigation-section">
-                <a href="../../index.html"><img src="../../assets/images/logo.jpg" alt="MAPLE Logo" style="width: 80px; height: 80px; object-fit: contain; display: block; margin-bottom: 1.5rem; cursor: pointer; background: transparent; border: none;"></a>
-                <h2>Navigation</h2>
-                <ul class="nav-list">
-                    <li><a href="#tutorials">User Guide</a></li>
-                    <li><a href="../../general.html">About MAPLE</a></li>
-                    <li><a href="../../documentation.html">Documentation</a></li>
-                    <li><a href="../../index.html">Home</a></li>
-                    <li><a href="#articles">Articles</a></li>
-                    <li><a href="#download">Downloads</a></li>
-                    <li><a href="#issues">Report an issue</a></li>
-                    <li><a href="#development">Development</a></li>
-                </ul>
-            </aside>
+  <header class="top-nav">
+    <div class="container">
+      <div class="brand">
+        <a href="../../index.html"><img src="../../assets/images/logo.jpg" alt="MAPLE Logo"></a>
+        <a href="../../index.html">MAPLE</a>
+      </div>
+      <button class="mobile-toggle" aria-label="Toggle menu">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+      </button>
+      <nav>
+        <ul>
+          <li><a href="../../index.html">Home</a></li>
+          <li><a href="../../general.html">About</a></li>
+          <li><a href="../../documentation.html">Documentation</a></li>
+          <li><a href="../../articles.html">Articles</a></li>
+          <li><a href="../../downloads.html">Downloads</a></li>
+          <li><a href="../../development.html">Development</a></li>
+          <li><a href="../../issues.html">Report Issue</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
 
-            <div class="main-content">
-                <section class="welcome-section">
-                    <h1>Transition State Method: Dimer</h1>
-                    <p class="tagline">Local transition-state search algorithm based on minimum-mode following.</p>
-                </section>
-
-                <section class="new-section">
-                    <p>The Dimer method is a local transition-state search algorithm based on minimum-mode following. Starting from a single initial geometry, it rotates a trial direction to follow the lowest-curvature mode and then translates the structure along this mode under a trust region, climbing efficiently toward a first-order saddle point.</p>
-                </section>
-
-                <section class="new-section">
-                    <h2>I. Adjustable Parameters</h2>
-                    
-                    <h3>use_hvp</h3>
-                    <p>Hessian–vector backend. If true, the Dimer uses an analytic Hessian–vector product H·n when available; otherwise H·n is evaluated by finite differences controlled by delta.</p>
-                    <ul>
-                        <li><strong>=false (default)</strong></li>
-                        <li><strong>=true</strong></li>
-                    </ul>
-
-                    <h3>delta</h3>
-                    <p>Finite-difference step (Å). Step length Δ along the dimer direction when approximating curvature from forces at R ± Δn.</p>
-                    <p><strong>(default: delta=0.005)</strong></p>
-
-                    <h3>rot_max_iter</h3>
-                    <p>Maximum rotation iterations. Maximum number of inner rotation steps per outer Dimer iteration used to minimize κ = n†Hn.</p>
-                    <p><strong>(default: rot_max_iter=5)</strong></p>
-
-                    <h3>rot_alpha</h3>
-                    <p>Rotation step factor. Controls the step size for updating the dimer orientation along the rotational force; smaller values give more conservative rotations.</p>
-                    <p><strong>(default: rot_alpha=0.5)</strong></p>
-
-                    <h3>rot_fmax_th</h3>
-                    <p>Rotation max-force threshold. Convergence threshold on the maximum component of the rotational force |F_rot| (Eh/Å) during orientation optimization.</p>
-                    <p><strong>(default: rot_fmax_th=1.0e-3)</strong></p>
-
-                    <h3>rot_frms_th</h3>
-                    <p>Rotation RMS-force threshold. Convergence threshold on the RMS rotational force |F_rot|_rms (Eh/Å).</p>
-                    <p><strong>(default: rot_frms_th=5.0e-4)</strong></p>
-
-                    <h3>step0</h3>
-                    <p>Initial step scale. Initial scaling factor for the translational step along the TS search direction.</p>
-                    <p><strong>(default: step0=0.2)</strong></p>
-
-                    <h3>step_max</h3>
-                    <p>Maximum Cartesian displacement (Å). Hard upper limit on the per-iteration atomic displacement; prevents unstable, overly large steps.</p>
-                    <p><strong>(default: step_max=0.15)</strong></p>
-
-                    <h3>trust_radius</h3>
-                    <p>Trust-region radius (Å). Effective maximum step size in the chosen metric; the actual step is restricted by min(trust_radius, step_max) in each iteration.</p>
-                    <p><strong>(default: trust_radius=0.15)</strong></p>
-
-                    <h3>fmax_th</h3>
-                    <p>Max-force threshold. Target convergence threshold on the maximum (Eh/Å) translational force component.</p>
-                    <p><strong>(default: fmax_th=5.0e-3)</strong></p>
-
-                    <h3>frms_th</h3>
-                    <p>RMS-force threshold. Target convergence threshold on the RMS (Eh/Å) translational force.</p>
-                    <p><strong>(default: frms_th=1.0e-3)</strong></p>
-
-                    <h3>kappa_to_flip</h3>
-                    <p>Curvature flip threshold. When κ = n†Hn falls below this value, the parallel force component is flipped so that the Dimer climbs along the negative-curvature mode toward the saddle.</p>
-                    <p><strong>(default: kappa_to_flip=0.0)</strong></p>
-
-                    <h3>max_iter</h3>
-                    <p>Maximum Dimer iterations. Maximum number of outer Dimer steps allowed in the TS search.</p>
-                    <p><strong>(default: max_iter=200)</strong></p>
-
-                    <h3>use_mass_weight</h3>
-                    <p>Mass-weighted metric. If true, dot products and norms are evaluated in a mass-weighted metric, which can improve mode localization in systems with very different masses.</p>
-                    <ul>
-                        <li><strong>=false (default)</strong></li>
-                        <li><strong>=true</strong></li>
-                    </ul>
-
-                    <h3>remove_rigid</h3>
-                    <p>Remove rigid-body motion. If true, global translation and rotation are projected out of the dimer direction so that the search follows purely internal modes.</p>
-                    <p><strong>(default: remove_rigid=true)</strong></p>
-
-                    <h3>n_init</h3>
-                    <p>Initial orientation mode. Choice of how to construct the initial dimer direction n:</p>
-                    <ul>
-                        <li><strong>=random (default)</strong> – random vector</li>
-                        <li><strong>=force</strong> – aligned with the force</li>
-                        <li><strong>=given</strong> – use the user-specified n_given</li>
-                    </ul>
-
-                    <h3>n_given</h3>
-                    <p>User-defined initial n. Optional user-specified initial direction used when n_init="given". Its length must match 3N.</p>
-                    <p><strong>(default: n_given=None)</strong></p>
-
-                    <h3>save_traj</h3>
-                    <p>Write Dimer trajectory. Controls whether all intermediate structures are written to an XYZ trajectory file (*_dimer_traj.xyz).</p>
-                    <p><strong>(default: save_traj=true)</strong></p>
-                </section>
-
-                <section class="new-section">
-                    <h2>II. Output Files</h2>
-                    <p>The Dimer method produces several output files containing information about the transition state search process.</p>
-                    
-                    <h3>Main Output File: *.out</h3>
-                    <p>Contains detailed information about the dimer search process, including rotation and translation steps, convergence diagnostics, and final transition state properties.</p>
-
-                    <h3>Trajectory File: *_dimer_traj.xyz</h3>
-                    <p>XYZ trajectory file containing all intermediate structures generated during the dimer search, useful for visualizing the search path.</p>
-
-                    <h3>Final Structure</h3>
-                    <p>The final optimized transition state structure is written to output files for further analysis.</p>
-                </section>
-            </div>
+  <div class="page-layout">
+    <aside class="sidebar">
+      <nav class="sidebar-nav">
+        <div class="sidebar-brand">
+          <img src="../../assets/images/logo.jpg" alt="MAPLE">
+          <span>MAPLE Docs</span>
         </div>
+        <div class="sidebar-tree">
+          <ul>
+            <li>
+              <span class="tree-section"><span class="chevron"></span> Getting Started</span>
+              <ul class="children">
+                <li><a href="../../tutorials/installation.html">Installation</a></li>
+                <li><a href="../../tutorials/quickstart.html">Quick Start</a></li>
+                <li><a href="../../tutorials/input_output.html">Input &amp; Output</a></li>
+              </ul>
+            </li>
+            <li>
+              <span class="tree-section"><span class="chevron"></span> Input Setup</span>
+              <ul class="children">
+                <li><a href="../../setup/settings.html">Settings</a></li>
+                <li><a href="../../setup/coordinates.html">Coordinates</a></li>
+                <li><a href="../../setup/models.html">ML Models</a></li>
+              </ul>
+            </li>
+            <li class="open">
+              <span class="tree-section"><span class="chevron"></span> Tasks</span>
+              <ul class="children">
+                <li><a href="../../tasks/singlepoint.html">Single Point</a></li>
+                <li><a href="../../tasks/frequency.html">Frequency</a></li>
+                <li>
+                  <span class="tree-label"><span class="chevron"></span> <a href="../opt/optimization.html">Optimization</a></span>
+                  <ul class="children">
+                    <li><a href="../opt/opt_lbfgs.html">L-BFGS</a></li>
+                    <li><a href="../opt/opt_rfo.html">RFO</a></li>
+                    <li><a href="../opt/opt_sd.html">SD</a></li>
+                  </ul>
+                </li>
+                <li class="open">
+                  <span class="tree-label"><span class="chevron"></span> <a href="ts.html">Transition State</a></span>
+                  <ul class="children">
+                    <li><a href="ts_prfo.html">P-RFO</a></li>
+                    <li><a href="ts_neb.html">NEB</a></li>
+                    <li><a href="ts_dimmer.html" class="active">Dimer</a></li>
+                    <li><a href="ts_string.html">String/GSM</a></li>
+                    <li><a href="ts_autoneb.html">AutoNEB</a></li>
+                  </ul>
+                </li>
+                <li>
+                  <span class="tree-label"><span class="chevron"></span> <a href="../scan/scan.html">PES Scan</a></span>
+                  <ul class="children">
+                    <li><a href="../scan/scan_lbfgs.html">L-BFGS</a></li>
+                    <li><a href="../scan/scan_rfo.html">RFO</a></li>
+                  </ul>
+                </li>
+                <li>
+                  <span class="tree-label"><span class="chevron"></span> <a href="../irc/irc.html">IRC</a></span>
+                  <ul class="children">
+                    <li><a href="../irc/irc_gs.html">GS</a></li>
+                    <li><a href="../irc/irc_lqa.html">LQA</a></li>
+                    <li><a href="../irc/irc_hpc.html">HPC</a></li>
+                    <li><a href="../irc/irc_eulerpc.html">EulerPC</a></li>
+                  </ul>
+                </li>
+              </ul>
+            </li>
+            <li>
+              <span class="tree-section"><span class="chevron"></span> Functions</span>
+              <ul class="children">
+                <li><a href="../../functions/solvent.html">Solvation</a></li>
+                <li><a href="../../functions/constrain.html">Constraints</a></li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </nav>
+    </aside>
+
+    <main class="content">
+      <nav class="breadcrumb">
+        <a href="../../index.html">Home</a>
+        <span class="separator">/</span>
+        <a href="../../documentation.html">Docs</a>
+        <span class="separator">/</span>
+        <a href="../../documentation.html">Tasks</a>
+        <span class="separator">/</span>
+        <a href="ts.html">Transition State</a>
+        <span class="separator">/</span>
+        <span class="current">Dimer</span>
+      </nav>
+
+      <article>
+        <h1>Dimer Method</h1>
+
+        <h2 id="overview">Overview</h2>
+        <p>The Dimer method is a minimum-mode following algorithm for locating first-order saddle points on the potential energy surface. Unlike path-based methods such as NEB or String, the Dimer method requires only a single starting structure and does not need knowledge of the product geometry.</p>
+        <p>The method works by constructing a "dimer" consisting of two images separated by a small distance along a trial direction. At each iteration, the dimer is first rotated to align with the lowest curvature mode of the PES (the mode with the most negative eigenvalue), then translated along this mode. The parallel component of the force is inverted so that the structure climbs uphill along the reaction coordinate while relaxing in all perpendicular directions, converging to a nearby saddle point.</p>
+
+        <h2 id="parameters">Parameters</h2>
+        <div class="table-wrapper">
+          <table>
+            <thead>
+              <tr>
+                <th>Parameter</th>
+                <th>Type</th>
+                <th>Default</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>use_hvp</code></td>
+                <td>bool</td>
+                <td>False</td>
+                <td>Use Hessian-vector products instead of finite differences.</td>
+              </tr>
+              <tr>
+                <td><code>delta</code></td>
+                <td>float</td>
+                <td>0.005</td>
+                <td>Finite-difference displacement for dimer rotation (Angstrom).</td>
+              </tr>
+              <tr>
+                <td><code>rot_max_iter</code></td>
+                <td>int</td>
+                <td>5</td>
+                <td>Maximum rotation iterations per translation step.</td>
+              </tr>
+              <tr>
+                <td><code>rot_alpha</code></td>
+                <td>float</td>
+                <td>0.5</td>
+                <td>Rotation step scaling factor.</td>
+              </tr>
+              <tr>
+                <td><code>rot_f_max_th</code></td>
+                <td>float</td>
+                <td>1.0e-3</td>
+                <td>Max force threshold for rotation convergence.</td>
+              </tr>
+              <tr>
+                <td><code>rot_f_rms_th</code></td>
+                <td>float</td>
+                <td>5.0e-4</td>
+                <td>RMS force threshold for rotation convergence.</td>
+              </tr>
+              <tr>
+                <td><code>step0</code></td>
+                <td>float</td>
+                <td>0.2</td>
+                <td>Initial translation step size.</td>
+              </tr>
+              <tr>
+                <td><code>step_max</code></td>
+                <td>float</td>
+                <td>0.15</td>
+                <td>Maximum translation step size.</td>
+              </tr>
+              <tr>
+                <td><code>trust_radius</code></td>
+                <td>float</td>
+                <td>0.15</td>
+                <td>Trust radius for translation.</td>
+              </tr>
+              <tr>
+                <td><code>f_max_th</code></td>
+                <td>float</td>
+                <td>5.0e-3</td>
+                <td>Max force convergence threshold for overall dimer.</td>
+              </tr>
+              <tr>
+                <td><code>f_rms_th</code></td>
+                <td>float</td>
+                <td>1.0e-3</td>
+                <td>RMS force convergence threshold.</td>
+              </tr>
+              <tr>
+                <td><code>kappa_to_flip</code></td>
+                <td>float</td>
+                <td>0.0</td>
+                <td>Curvature threshold for mode flipping.</td>
+              </tr>
+              <tr>
+                <td><code>max_iter</code></td>
+                <td>int</td>
+                <td>200</td>
+                <td>Maximum dimer translation iterations.</td>
+              </tr>
+              <tr>
+                <td><code>use_mass_weight</code></td>
+                <td>bool</td>
+                <td>False</td>
+                <td>Use mass-weighted coordinates.</td>
+              </tr>
+              <tr>
+                <td><code>remove_rigid</code></td>
+                <td>bool</td>
+                <td>True</td>
+                <td>Remove rigid body translations and rotations.</td>
+              </tr>
+              <tr>
+                <td><code>n_init</code></td>
+                <td>str</td>
+                <td>"random"</td>
+                <td>Initial dimer direction: "random", "force", or "given".</td>
+              </tr>
+              <tr>
+                <td><code>n_given</code></td>
+                <td>ndarray</td>
+                <td>None</td>
+                <td>User-supplied initial dimer direction vector.</td>
+              </tr>
+              <tr>
+                <td><code>save_traj</code></td>
+                <td>bool</td>
+                <td>True</td>
+                <td>Save trajectory of dimer steps.</td>
+              </tr>
+              <tr>
+                <td><code>save_metrics</code></td>
+                <td>bool</td>
+                <td>True</td>
+                <td>Save convergence metrics to output.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h2 id="input-example">Input Example</h2>
+        <pre><code>#model=ani1xnr
+#ts(method=dimer)
+#device=gpu0
+
+XYZ /path/to/ts_guess.xyz</code></pre>
+
+        <h2 id="output">Output</h2>
+        <ul>
+          <li><code>*_dimer_ts.xyz</code> &mdash; The final converged transition state geometry.</li>
+          <li><code>*_dimer_traj.xyz</code> &mdash; Multi-frame XYZ trajectory file containing all intermediate structures generated during the search, useful for visualizing the path from the initial guess to the saddle point.</li>
+        </ul>
+
+        <h2 id="when-to-use">When to Use</h2>
+        <p>The Dimer method is the right choice when:</p>
+        <ul>
+          <li><strong>The product is unknown.</strong> You want to explore what reactions are possible from a given structure without knowing the endpoint geometry in advance.</li>
+          <li><strong>Exploring the PES landscape.</strong> You want to systematically discover nearby saddle points from a minimum, for example to enumerate possible decomposition pathways or rearrangement channels.</li>
+          <li><strong>Single-ended search is preferred.</strong> You have a reasonable guess for the TS geometry (e.g., from chemical intuition or a constrained scan) but do not have a product structure to use with NEB or String.</li>
+          <li><strong>The reaction path is not well-defined.</strong> When the reaction involves complex conformational changes where defining a clear product is difficult, the Dimer method can find the nearest saddle point without requiring path construction.</li>
+        </ul>
+
+        <nav class="page-nav">
+          <a href="ts_neb.html">&larr; Previous: NEB</a>
+          <a class="next" href="ts_string.html">Next: String/GSM &rarr;</a>
+        </nav>
+      </article>
     </main>
 
-    <footer>
-        <p>&copy; 2025, MAPLE development team.</p>
-    </footer>
+    <aside class="toc"><div class="toc-sticky"><h3>On this page</h3><ul></ul></div></aside>
+  </div>
+  <div class="sidebar-overlay"></div>
+  <footer><p>&copy; 2026, MAPLE development team.</p></footer>
+  <script src="../../assets/js/main.js"></script>
 </body>
 </html>

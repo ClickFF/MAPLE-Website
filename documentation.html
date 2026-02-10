@@ -1,133 +1,218 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>User Guide - MAPLE</title>
-    <link rel="stylesheet" href="assets/css/styles.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Documentation — MAPLE</title>
+  <link rel="stylesheet" href="assets/css/styles.css">
 </head>
 <body>
-    <header class="top-nav">
-        <div class="container">
-            <div class="brand">
-                <a href="index.html"><img src="assets/images/logo.jpg" alt="MAPLE Logo"></a>
-                <a href="index.html">MAPLE</a>
-            </div>
-            <nav>
-                <ul>
-                    <li><a href="index.html">Home</a></li>
-                    <li><a href="general.html">About MAPLE</a></li>
-                    <li><a href="documentation.html">User Guide</a></li>
-                    <li><a href="articles.html">Articles</a></li>
-                    <li><a href="downloads.html">Downloads</a></li>
-                    <li><a href="issues.html">Report an issue</a></li>
-                    <li><a href="development.html">Development</a></li>
-                </ul>
-            </nav>
+  <header class="top-nav">
+    <div class="container">
+      <div class="brand">
+        <a href="index.html"><img src="assets/images/logo.jpg" alt="MAPLE Logo"></a>
+        <a href="index.html">MAPLE</a>
+      </div>
+      <button class="mobile-toggle" aria-label="Toggle menu">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+      </button>
+      <nav>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="general.html">About</a></li>
+          <li><a href="documentation.html" class="active">Documentation</a></li>
+          <li><a href="articles.html">Articles</a></li>
+          <li><a href="downloads.html">Downloads</a></li>
+          <li><a href="development.html">Development</a></li>
+          <li><a href="issues.html">Report Issue</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <div class="page-hero">
+    <h1>Documentation</h1>
+    <p class="subtitle">Comprehensive guides, tutorials, and references for using MAPLE effectively in your computational chemistry workflows.</p>
+  </div>
+
+  <div class="page-body">
+    <article>
+      <div class="section-header">
+        <h2 id="tutorials">Tutorials &amp; Guides</h2>
+        <p>Browse documentation by category to find the information you need.</p>
+      </div>
+
+      <div class="tutorial-categories">
+        <div class="category-card">
+          <h3>Getting Started</h3>
+          <ul>
+            <li><a href="downloads.html">Installation Guide</a></li>
+            <li><a href="general.html">About MAPLE</a></li>
+            <li><a href="general.html#what-is-maple">Input &amp; Output Overview</a></li>
+          </ul>
         </div>
-    </header>
-    <main>
-        <div class="content-wrapper">
-            <div class="main-content">
-                <section class="welcome-section">
-                    <h1>User Guide</h1>
-                    <p class="tagline">Comprehensive guides and references for using MaLePSO.</p>
-                </section>
 
-                <div id="quickstart">
-                    <div class="doc-layout" style="display:flex; gap:2rem; align-items:flex-start;">
-                        <aside class="navigation-section" style="flex:0 0 260px;">
-                            <div class="doc-tree">
-                                <ul>
-                                    <li class="open">
-                                        <span class="toggle">Getting Started</span>
-                                        <ul class="children">
-                                            <li><a href="downloads.html#installation">Installation Guide</a></li>
-                                            <li class="open">
-                                                <span class="toggle">Quick Start Tutorial</span>
-                                                <ul class="children">
-                                                    <li>
-                                                        <!-- IRC is a clickable article link; its children are present but collapsed by default in the main documentation tree -->
-                                                        <a href="tasks/irc/irc.html">IRC</a>
-                                                        <ul class="children">
-                                                            <li><a href="tasks/irc/irc_gs.html">GS</a></li>
-                                                            <li><a href="tasks/irc/irc_lqa.html">LQA</a></li>
-                                                            <li><a href="tasks/irc/irc_hpc.html">HPC</a></li>
-                                                            <li><a href="tasks/irc/irc_eulerpc.html">EulerPC</a></li>
-                                                        </ul>
-                                                    </li>
-                                                </ul>
-                                            </li>
-                                        </ul>
-                                    </li>
-                                </ul>
-                            </div>
-                        </aside>
-
-                        <div class="doc-main" style="flex:1;">
-                            <!-- Installation in-page content (shows same info as Downloads installation section) -->
-                            <section class="quick-article" id="installation">
-                                <h3>Installation</h3>
-                                <h4>Requirements</h4>
-                                <ul>
-                                    <li>Python ≥ 3.9</li>
-                                    <li>CUDA-capable GPU (recommended for ML models)</li>
-                                </ul>
-
-                                <h4>Install MAPLE</h4>
-                                <p class="code-example"># Clone the repository<br>git clone https://github.com/ClickFF/MAPLE.git<br>cd MAPLE<br><br># Install in development mode<br>pip install -e .</p>
-
-                                <h4>Install Dependencies</h4>
-                                <p>MAPLE requires several scientific computing and machine learning packages:</p>
-
-                                <h5>Core dependencies (required)</h5>
-                                <p class="code-example">conda install -c conda-forge numpy scipy matplotlib ase</p>
-
-                                <h5>PyTorch</h5>
-                                <p class="code-example"># For CUDA 11.8:<br>pip install torch --index-url https://download.pytorch.org/whl/cu118<br><br># For CPU only:<br>pip install torch --index-url https://download.pytorch.org/whl/cpu</p>
-
-                                <h5>Machine learning potentials</h5>
-                                <p class="code-example">pip install fairchem-core  # For AIMNet2 and ANI models</p>
-                            </section>
-                        </div>
-                    </div>
-                </div>
-                    <!-- Inline article placeholders removed; Use Tasks/ independent pages instead -->
-                    </div>
-                </section>
-            </div>
+        <div class="category-card">
+          <h3>Input Setup</h3>
+          <ul>
+            <li><a href="setup/settings.html">Settings &amp; Configuration</a></li>
+            <li><a href="setup/coordinates.html">Coordinates</a></li>
+            <li><a href="general.html#ml-potentials">ML Models Reference</a></li>
+          </ul>
         </div>
-    </main>
 
-    <footer>
-        <p>&copy; 2025, MAPLE development team.</p>
-    </footer>
+        <div class="category-card">
+          <h3>Tasks</h3>
+          <ul>
+            <li><a href="tasks/singlepoint.html">Single Point Energy</a></li>
+            <li><a href="tasks/opt/optimization.html">Geometry Optimization</a></li>
+            <li><a href="tasks/ts/ts.html">Transition State Search</a></li>
+            <li><a href="tasks/scan/scan.html">PES Scan</a></li>
+            <li><a href="tasks/irc/irc.html">IRC Analysis</a></li>
+          </ul>
+        </div>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            // toggle tree nodes
-            document.querySelectorAll('.doc-tree .toggle').forEach(function (el) {
-                el.addEventListener('click', function () {
-                    var li = el.parentElement;
-                    li.classList.toggle('open');
-                });
-            });
+        <div class="category-card">
+          <h3>Functions</h3>
+          <ul>
+            <li><a href="functions/solvent.html">Solvation Models</a></li>
+            <li><a href="functions/constrain.html">Geometric Constraints</a></li>
+          </ul>
+        </div>
+      </div>
 
-            // smooth-scroll for in-page anchors
-            document.querySelectorAll('a[href^="#"]').forEach(function (a) {
-                a.addEventListener('click', function (ev) {
-                    var href = a.getAttribute('href');
-                    if (href.startsWith('#')) {
-                        ev.preventDefault();
-                        var tgt = document.querySelector(href);
-                        if (tgt) tgt.scrollIntoView({behavior: 'smooth', block: 'start'});
-                        // mark the clicked link active
-                        document.querySelectorAll('.doc-tree a').forEach(function(x){ x.classList.remove('active'); });
-                        a.classList.add('active');
-                    }
-                });
-            });
-        });
-    </script>
+      <div class="section-header mt-3">
+        <h2 id="quick-reference">Quick Reference</h2>
+        <p>Common input keywords and their usage.</p>
+      </div>
+
+      <h3 id="model-keywords">Model Selection</h3>
+      <p>Use the <code>#model</code> keyword to select the ML potential for your calculation.</p>
+      <div class="table-wrapper">
+        <table>
+          <thead>
+            <tr>
+              <th>Keyword</th>
+              <th>Model</th>
+              <th>Elements</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>ani2x</code></td>
+              <td>ANI-2x</td>
+              <td>H, C, N, O, S, F, Cl</td>
+            </tr>
+            <tr>
+              <td><code>ani1x</code></td>
+              <td>ANI-1x</td>
+              <td>H, C, N, O</td>
+            </tr>
+            <tr>
+              <td><code>ani1ccx</code></td>
+              <td>ANI-1ccx</td>
+              <td>H, C, N, O</td>
+            </tr>
+            <tr>
+              <td><code>ani1xnr</code></td>
+              <td>ANI-1xnr</td>
+              <td>H, C, N, O</td>
+            </tr>
+            <tr>
+              <td><code>aimnet2</code></td>
+              <td>AIMNet2</td>
+              <td>Broad organic coverage</td>
+            </tr>
+            <tr>
+              <td><code>maceoff23s</code></td>
+              <td>MACE-OFF23 (small)</td>
+              <td>H, C, N, O, F, S, Cl</td>
+            </tr>
+            <tr>
+              <td><code>maceoff23m</code></td>
+              <td>MACE-OFF23 (medium)</td>
+              <td>H, C, N, O, F, S, Cl</td>
+            </tr>
+            <tr>
+              <td><code>maceoff23l</code></td>
+              <td>MACE-OFF23 (large)</td>
+              <td>H, C, N, O, F, S, Cl</td>
+            </tr>
+            <tr>
+              <td><code>egret</code></td>
+              <td>EGRET</td>
+              <td>Organic molecules</td>
+            </tr>
+            <tr>
+              <td><code>uma</code></td>
+              <td>UMA</td>
+              <td>Universal coverage</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3 id="task-keywords">Task Types</h3>
+      <p>Specify the calculation type using the <code>#task(parameters)</code> syntax. If no task is specified, MAPLE defaults to a single point calculation.</p>
+      <div class="table-wrapper">
+        <table>
+          <thead>
+            <tr>
+              <th>Keyword</th>
+              <th>Task</th>
+              <th>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>#sp</code></td>
+              <td>Single Point</td>
+              <td>Energy and properties at a fixed geometry</td>
+            </tr>
+            <tr>
+              <td><code>#freq</code></td>
+              <td>Frequency</td>
+              <td>Vibrational analysis and thermochemistry</td>
+            </tr>
+            <tr>
+              <td><code>#opt(...)</code></td>
+              <td>Optimization</td>
+              <td>Geometry optimization with configurable method</td>
+            </tr>
+            <tr>
+              <td><code>#ts(...)</code></td>
+              <td>Transition State</td>
+              <td>Saddle point search</td>
+            </tr>
+            <tr>
+              <td><code>#scan(...)</code></td>
+              <td>PES Scan</td>
+              <td>Potential energy surface scan along coordinates</td>
+            </tr>
+            <tr>
+              <td><code>#irc(...)</code></td>
+              <td>IRC</td>
+              <td>Intrinsic reaction coordinate path following</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3 id="device-keywords">Device Configuration</h3>
+      <pre><code><span class="comment"># Run on GPU (recommended for performance)</span>
+<span class="keyword">#device</span>=<span class="value">gpu0</span>
+
+<span class="comment"># Run on CPU</span>
+<span class="keyword">#device</span>=<span class="value">cpu</span>
+
+<span class="comment"># Enable D4 dispersion correction</span>
+<span class="keyword">#d4</span>=<span class="value">true</span></code></pre>
+    </article>
+  </div>
+
+  <footer>
+    <p>&copy; 2026, MAPLE development team.</p>
+  </footer>
+  <script src="assets/js/main.js"></script>
 </body>
 </html>

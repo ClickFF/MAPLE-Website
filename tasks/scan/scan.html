@@ -1,87 +1,241 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Scan - MAPLE</title>
-    <link rel="stylesheet" href="../../assets/css/styles.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PES Scan - MAPLE</title>
+  <link rel="stylesheet" href="../../assets/css/styles.css">
 </head>
 <body>
-    <main>
-        <div class="content-wrapper">
-            <aside class="navigation-section">
-                <a href="../../index.html"><img src="../../assets/images/logo.jpg" alt="MAPLE Logo" style="width: 80px; height: 80px; object-fit: contain; display: block; margin-bottom: 1.5rem; cursor: pointer; background: transparent; border: none;"></a>
-                <h2>Navigation</h2>
-                <ul class="nav-list">
-                    <li><a href="#tutorials">User Guide</a></li>
-                    <li><a href="../../general.html">About MAPLE</a></li>
-                    <li><a href="../../documentation.html">Documentation</a></li>
-                    <li><a href="../../index.html">Home</a></li>
-                    <li><a href="#articles">Articles</a></li>
-                    <li><a href="#download">Downloads</a></li>
-                    <li><a href="#issues">Report an issue</a></li>
-                    <li><a href="#development">Development</a></li>
-                </ul>
-            </aside>
+  <header class="top-nav">
+    <div class="container">
+      <div class="brand">
+        <a href="../../index.html"><img src="../../assets/images/logo.jpg" alt="MAPLE Logo"></a>
+        <a href="../../index.html">MAPLE</a>
+      </div>
+      <button class="mobile-toggle" aria-label="Toggle menu">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+      </button>
+      <nav>
+        <ul>
+          <li><a href="../../index.html">Home</a></li>
+          <li><a href="../../general.html">About</a></li>
+          <li><a href="../../documentation.html">Documentation</a></li>
+          <li><a href="../../articles.html">Articles</a></li>
+          <li><a href="../../downloads.html">Downloads</a></li>
+          <li><a href="../../development.html">Development</a></li>
+          <li><a href="../../issues.html">Report Issue</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
 
-            <div class="main-content">
-                <section class="welcome-section">
-                    <h1>Module: Scan (scan)</h1>
-                </section>
-
-                <section class="new-section">
-                    <p>The Scan module performs constrained potential energy scans in internal coordinates by systematically varying selected bond distances, bond angles, and dihedral angles around a reference geometry. For each user-defined scan coordinate, the module constructs a sequence of target values (based on atom indices, step size, and number of steps), then forms the full multidimensional grid via the Cartesian product of these sequences. At every grid point, the corresponding internal coordinates are enforced using internal-coordinate constraints, and a constrained geometry optimization is carried out to relax all remaining degrees of freedom, yielding a discrete mapping of the potential energy surface suitable for torsional profiles and reaction-path exploration. The module supports gradient-based constrained optimization with three algorithms: <strong><a href="scan_lbfgs.html">LBFGS</a></strong> as the default workhorse, <strong>CG</strong> (Conjugate Gradient) as an alternative first-order method, and <strong><a href="scan_rfo.html">RFO</a></strong> (Rational Function Optimization) as a Hessian-based option suitable for refining structures near stationary points.</p>
-                </section>
-
-                <section class="new-section">
-                    <h2>I. Scan Module Unified Input Parameters</h2>
-                    <p>The Scan control line selects the geometry optimization algorithm used to relax each constrained structure along the scan path. The scan coordinates themselves (which bonds, angles, or dihedrals, and their step sizes and numbers of steps) are specified separately via the scan <strong>constraints</strong>, not in this unified control block.</p>
-                    
-                    <h3>method</h3>
-                    <p>Choose the geometry optimization algorithm for each constrained scan point:</p>
-                    <ul>
-                        <li>= <strong><a href="scan_lbfgs.html">lbfgs</a></strong> (default)</li>
-                        <li>= <strong>cg</strong></li>
-                        <li>= <strong><a href="scan_rfo.html">rfo</a></strong></li>
-                    </ul>
-                </section>
-
-                <section class="new-section">
-                    <h2>II. Output File Contents</h2>
-                    
-                    <h3>Output File (*.out)</h3>
-                    <p>When running Scan calculations, the main text output file (*.out) reports the progress of the scan over the grid of internal coordinates and the convergence information for each grid point. Compared to a single optimization, the main new feature is the "Scanning combination …" header that labels each point on the scan grid and shows which scan combination is currently being optimized.</p>
-                    <p>Example:</p>
-                    <p><code>Scanning combination 1/66: ['1.82', '62.02']<br><br>Coordinates<br>----------------------------------------------------------------------<br>Running the L-BFGS ...<br>0    C               -0.7997              -1.1662               0.1875<br>1    C                1.2861               0.0939               0.0202<br>...<br>21   H                2.8768              -0.4365              -1.3650<br><br>Maximum Force:           0.006107     0.010000                Yes<br>RMS Force:               0.005310     0.006000                Yes<br>Maximum Displacement:    0.026630     0.040000                Yes<br>RMS Displacement:        0.012205     0.025000                Yes</code></p>
-                    
-                    <p><strong>Explain:</strong></p>
-                    <ul>
-                        <li>The line <strong>Scanning combination 1/66: ['1.82', '62.02']</strong> shows the scan progress: 1/66 means this is the first combination out of 66 total scan grid points generated from the user-defined Scan commands in the input (e.g., S-lines specifying which bond/angle/dihedral is scanned and how many steps are used). The list in brackets (here ['1.82', '62.02']) records the actual target values of the scanned internal coordinates for this particular grid point, typically corresponding to the current bond length(s), angle(s), or dihedral(s) in their respective units (e.g., Å and degrees) as defined by the Scan setup.</li>
-                        <li>The "Coordinates" block lists the atomic indices, element symbols, and Cartesian coordinates (in <strong>Å</strong>) for the constrained structure associated with this scan point, following the same formatting as the coordinate print-out used elsewhere in the code.</li>
-                        <li>The line <strong>Running the L-BFGS ...</strong> indicates that the L-BFGS geometry optimizer is being applied to relax this configuration under the specified scan constraints.</li>
-                        <li>The four lines at the bottom report the standard convergence metrics for this scan grid point: Maximum Force, RMS Force, Maximum Displacement, and RMS Displacement. Each metric is printed with its current value, the corresponding threshold, and a "Yes/No" flag indicating whether that criterion is satisfied. When all four criteria are marked "Yes", the structure at this scan point is considered converged and the program proceeds to the next scan combination.</li>
-                    </ul>
-
-                    <h3>Scan Trajectory File (*.xyz)</h3>
-                    <p>In addition to the text output (*.out), Scan jobs produce an XYZ-format trajectory file that collects the optimized geometries for all scan grid points into a single multi-frame structure file. This file can be visualized or used as input for subsequent calculations. The format follows the standard multi-frame XYZ convention, which is also used by the program's XYZ reader.</p>
-                    <p>Example:</p>
-                    <p><code>22<br>Frame 1: 1<br>C  -0.7781   -1.0676   0.3211<br>C   1.3026    0.0521  -0.0283<br>...<br>H   2.9600   -0.3688  -1.3889<br>22</code></p>
-                    
-                    <p><strong>Explain:</strong></p>
-                    <ul>
-                        <li>The first line is the number of atoms in the system (here 22).</li>
-                        <li>The second line is a comment line (for example Frame 1: 1), which records the frame index and may optionally encode the scan combination or other metadata.</li>
-                        <li>The next N lines (where N is the number of atoms) give the element symbol followed by the three Cartesian coordinates (in Å) for each atom, representing the optimized geometry at that scan grid point.</li>
-                        <li>The next frame then starts with another atom-count line (e.g. the trailing 22 in the example) and repeats the same pattern for the following scan combination.</li>
-                    </ul>
-                    <p>Taken together, this multi-frame XYZ file provides a compact trajectory of all converged structures along the scan path and is suitable for visualization, analysis, or use as starting points for additional single-point, frequency, or transition-state calculations.</p>
-                </section>
-            </div>
+  <div class="page-layout">
+    <aside class="sidebar">
+      <nav class="sidebar-nav">
+        <div class="sidebar-brand">
+          <img src="../../assets/images/logo.jpg" alt="MAPLE">
+          <span>MAPLE Docs</span>
         </div>
+        <div class="sidebar-tree">
+          <ul>
+            <li>
+              <span class="tree-section"><span class="chevron"></span> Getting Started</span>
+              <ul class="children">
+                <li><a href="../../tutorials/installation.html">Installation</a></li>
+                <li><a href="../../tutorials/quickstart.html">Quick Start</a></li>
+                <li><a href="../../tutorials/input_output.html">Input &amp; Output</a></li>
+              </ul>
+            </li>
+            <li>
+              <span class="tree-section"><span class="chevron"></span> Input Setup</span>
+              <ul class="children">
+                <li><a href="../../setup/settings.html">Settings</a></li>
+                <li><a href="../../setup/coordinates.html">Coordinates</a></li>
+                <li><a href="../../setup/models.html">ML Models</a></li>
+              </ul>
+            </li>
+            <li class="open">
+              <span class="tree-section"><span class="chevron"></span> Tasks</span>
+              <ul class="children">
+                <li><a href="../../tasks/singlepoint.html">Single Point</a></li>
+                <li><a href="../../tasks/frequency.html">Frequency</a></li>
+                <li>
+                  <span class="tree-label"><span class="chevron"></span> <a href="../opt/optimization.html">Optimization</a></span>
+                  <ul class="children">
+                    <li><a href="../opt/opt_lbfgs.html">L-BFGS</a></li>
+                    <li><a href="../opt/opt_rfo.html">RFO</a></li>
+                    <li><a href="../opt/opt_sd.html">SD</a></li>
+                  </ul>
+                </li>
+                <li>
+                  <span class="tree-label"><span class="chevron"></span> <a href="../ts/ts.html">Transition State</a></span>
+                  <ul class="children">
+                    <li><a href="../ts/ts_prfo.html">P-RFO</a></li>
+                    <li><a href="../ts/ts_neb.html">NEB</a></li>
+                    <li><a href="../ts/ts_dimmer.html">Dimer</a></li>
+                    <li><a href="../ts/ts_string.html">String/GSM</a></li>
+                    <li><a href="../ts/ts_autoneb.html">AutoNEB</a></li>
+                  </ul>
+                </li>
+                <li class="open">
+                  <span class="tree-label"><span class="chevron"></span> <a href="scan.html" class="active">PES Scan</a></span>
+                  <ul class="children">
+                    <li><a href="scan_lbfgs.html">L-BFGS</a></li>
+                    <li><a href="scan_rfo.html">RFO</a></li>
+                  </ul>
+                </li>
+                <li>
+                  <span class="tree-label"><span class="chevron"></span> <a href="../irc/irc.html">IRC</a></span>
+                  <ul class="children">
+                    <li><a href="../irc/irc_gs.html">GS</a></li>
+                    <li><a href="../irc/irc_lqa.html">LQA</a></li>
+                    <li><a href="../irc/irc_hpc.html">HPC</a></li>
+                    <li><a href="../irc/irc_eulerpc.html">EulerPC</a></li>
+                  </ul>
+                </li>
+              </ul>
+            </li>
+            <li>
+              <span class="tree-section"><span class="chevron"></span> Functions</span>
+              <ul class="children">
+                <li><a href="../../functions/solvent.html">Solvation</a></li>
+                <li><a href="../../functions/constrain.html">Constraints</a></li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </nav>
+    </aside>
+
+    <main class="content">
+      <nav class="breadcrumb" aria-label="Breadcrumb">
+        <ol>
+          <li><a href="../../index.html">Home</a></li>
+          <li><a href="../../documentation.html">Docs</a></li>
+          <li><a href="../../documentation.html">Tasks</a></li>
+          <li aria-current="page">PES Scan</li>
+        </ol>
+      </nav>
+
+      <article>
+        <h1>Potential Energy Surface Scanning</h1>
+
+        <h2 id="overview">Overview</h2>
+        <p>The PES Scan module performs systematic exploration of the potential energy surface along user-specified internal coordinates. It supports one-dimensional (1D), two-dimensional (2D), and arbitrary N-dimensional scans. Two scan modes are available: <strong>relaxed</strong> scans, where all coordinates except the scanned ones are optimized at each step, and <strong>rigid</strong> scans, where all other coordinates are frozen at their initial values.</p>
+        <p>PES scans are commonly used for constructing torsional energy profiles, mapping bond-dissociation curves, exploring conformational landscapes, and generating starting geometries for transition-state searches.</p>
+
+        <h2 id="scan-coordinate-syntax">Scan Coordinate Syntax</h2>
+        <p>Scan coordinates are specified with the <code>S</code> command at the end of the input file, after the molecular geometry. The format depends on the type of internal coordinate being scanned:</p>
+        <ul>
+          <li><strong>Distance scan (2 atoms):</strong> <code>S atom1 atom2 step_size n_steps</code></li>
+          <li><strong>Angle scan (3 atoms):</strong> <code>S atom1 atom2 atom3 step_size n_steps</code></li>
+          <li><strong>Dihedral scan (4 atoms):</strong> <code>S atom1 atom2 atom3 atom4 step_size n_steps</code></li>
+        </ul>
+        <p>Where:</p>
+        <ul>
+          <li><strong>atom1</strong>, <strong>atom2</strong>, ... &mdash; 1-based atom indices defining the internal coordinate to scan.</li>
+          <li><strong>step_size</strong> &mdash; increment per step (in Angstroms for bonds, degrees for angles/dihedrals). Negative values scan in the decreasing direction.</li>
+          <li><strong>n_steps</strong> &mdash; number of scan steps to perform.</li>
+        </ul>
+
+        <h2 id="scan-modes">Scan Modes</h2>
+        <p>MAPLE supports two scan modes, selected via the <code>mode</code> parameter in the <code>#scan</code> header:</p>
+        <table>
+          <thead>
+            <tr>
+              <th>Mode</th>
+              <th>Description</th>
+              <th>Use Case</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>relaxed</strong></td>
+              <td>Optimizes all degrees of freedom except the scanned coordinates at each scan point. Produces a minimum-energy path along the scan coordinate.</td>
+              <td>Torsional profiles, bond dissociation curves, conformational analysis.</td>
+            </tr>
+            <tr>
+              <td><strong>rigid</strong></td>
+              <td>Freezes all coordinates at their initial values; only the scanned coordinate changes. No geometry optimization is performed.</td>
+              <td>Quick energy profiles, repulsive wall scans, initial survey of PES topology.</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <h2 id="input-example">Input Example</h2>
+        <p>A simple 1D relaxed bond scan between atoms 1 and 2:</p>
+        <pre><code>#model=uma
+#scan
+#device=gpu0
+
+C   0.0  0.0  0.0
+H   1.0  0.0  0.0
+O   2.0  0.0  0.0
+
+S 1 2 -0.1 15</code></pre>
+        <p>This performs 15 steps along the C&ndash;H bond, decreasing the distance by 0.1 &Aring; at each step. Since no method is specified, the default L-BFGS optimizer is used for relaxed optimization at each scan point.</p>
+
+        <h2 id="2d-scan-example">2D Scan Example</h2>
+        <p>To scan two coordinates simultaneously, specify multiple <code>S</code> lines. MAPLE constructs the full Cartesian-product grid of scan points:</p>
+        <pre><code>S 1 2 -0.1 15
+S 2 3 -0.05 10</code></pre>
+        <p>This produces a 15 &times; 10 = 150 grid of scan points. At each point, both scanned coordinates are constrained to their target values and all remaining degrees of freedom are optimized.</p>
+
+        <h2 id="scan-settings">Scan Settings</h2>
+        <p>The scan mode and optimizer are set via the <code>#scan</code> header line:</p>
+        <pre><code>#scan(mode=relaxed)
+#scan(mode=rigid)</code></pre>
+        <div class="table-wrapper">
+        <table>
+          <thead>
+            <tr>
+              <th>Parameter</th>
+              <th>Type</th>
+              <th>Default</th>
+              <th>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>mode</code></td>
+              <td>str</td>
+              <td><code>"relaxed"</code></td>
+              <td>Scan mode: <code>"relaxed"</code> (optimize at each point) or <code>"rigid"</code> (freeze all other coordinates).</td>
+            </tr>
+            <tr>
+              <td><code>method</code></td>
+              <td>str</td>
+              <td><code>"lbfgs"</code></td>
+              <td>Optimizer for relaxed scans. Valid: <code>"lbfgs"</code>, <code>"cg"</code>.</td>
+            </tr>
+          </tbody>
+        </table>
+        </div>
+        <div class="admonition note">
+          <p class="admonition-title">Note</p>
+          <p>During relaxed scans, the L-BFGS optimizer uses the following hardcoded defaults: <code>memory=5</code>, <code>curvature=70</code>, <code>max_step=0.2</code>, <code>max_iter=128</code>. These are not the same as the optimization task L-BFGS parameters and cannot be overridden from the input file.</p>
+        </div>
+
+        <h2 id="output-files">Output Files</h2>
+        <p>The scan module produces the following output files:</p>
+        <ul>
+          <li><strong><code>*_scan_final.xyz</code></strong> &mdash; Multi-frame XYZ file containing the optimized geometry at each scan point. Can be visualized as a trajectory in standard molecular viewers.</li>
+          <li><strong><code>*.out</code></strong> &mdash; Main text output with convergence diagnostics, energies, and coordinates for every scan point.</li>
+        </ul>
+        <p>The scan trajectory file uses the standard multi-frame XYZ format, with one frame per converged scan point. Each frame header includes the scan combination index and the target values of the scanned internal coordinates.</p>
+
+        <nav class="page-nav">
+          <a href="../ts/ts_autoneb.html">&larr; Previous: AutoNEB</a>
+          <a href="scan_lbfgs.html">Next: Scan L-BFGS &rarr;</a>
+        </nav>
+      </article>
     </main>
 
-    <footer>
-        <p>&copy; 2025, MAPLE development team.</p>
-    </footer>
+    <aside class="toc"><div class="toc-sticky"><h3>On this page</h3><ul></ul></div></aside>
+  </div>
+  <div class="sidebar-overlay"></div>
+  <footer><p>&copy; 2026, MAPLE development team.</p></footer>
+  <script src="../../assets/js/main.js"></script>
 </body>
 </html>

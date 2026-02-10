@@ -1,56 +1,110 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Articles</title>
-    <link rel="stylesheet" href="assets/css/styles.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Articles &amp; Publications — MAPLE</title>
+  <link rel="stylesheet" href="assets/css/styles.css">
 </head>
 <body>
-    <header class="top-nav">
-        <div class="container">
-            <div class="brand">
-                <a href="index.html"><img src="assets/images/logo.jpg" alt="MAPLE Logo"></a>
-                <a href="index.html">MAPLE</a>
-            </div>
-            <nav>
-                <ul>
-                    <li><a href="index.html">Home</a></li>
-                    <li><a href="general.html">About MAPLE</a></li>
-                    <li><a href="documentation.html">User Guide</a></li>
-                    <li><a href="articles.html">Articles</a></li>
-                    <li><a href="downloads.html">Downloads</a></li>
-                    <li><a href="issues.html">Report an issue</a></li>
-                    <li><a href="development.html">Development</a></li>
-                </ul>
-            </nav>
+  <header class="top-nav">
+    <div class="container">
+      <div class="brand">
+        <a href="index.html"><img src="assets/images/logo.jpg" alt="MAPLE Logo"></a>
+        <a href="index.html">MAPLE</a>
+      </div>
+      <button class="mobile-toggle" aria-label="Toggle menu">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+      </button>
+      <nav>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="general.html">About</a></li>
+          <li><a href="documentation.html">Documentation</a></li>
+          <li><a href="articles.html" class="active">Articles</a></li>
+          <li><a href="downloads.html">Downloads</a></li>
+          <li><a href="development.html">Development</a></li>
+          <li><a href="issues.html">Report Issue</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <div class="page-hero">
+    <h1>Articles &amp; Publications</h1>
+    <p class="subtitle">Research papers, preprints, and publications related to the MAPLE project and the machine learning potentials it supports.</p>
+  </div>
+
+  <div class="page-body">
+    <article>
+      <div class="section-header">
+        <h2 id="maple-papers">MAPLE Publications</h2>
+        <p>Papers describing the MAPLE framework and its applications.</p>
+      </div>
+
+      <div class="card-grid">
+        <div class="card">
+          <div class="card-tag">Framework</div>
+          <h3>MAPLE: A General Framework for Automated Molecular Modeling Across Machine Learning Potentials</h3>
+          <p>Presents MAPLE as a comprehensive framework for automated molecular modeling that works seamlessly across different machine learning potentials, providing a unified interface for diverse computational chemistry applications.</p>
+          <p class="mt-1"><a href="https://github.com/ClickFF/MAPLE" target="_blank" rel="noopener noreferrer">View on GitHub</a></p>
         </div>
-    </header>
+      </div>
 
-    <main>
-        <div class="content-wrapper">
-            <div class="main-content">
-                <section class="welcome-section">
-                    <h1>Articles</h1>
-                    <p class="tagline">Read about the latest developments and applications of MAPLE.</p>
-                </section>
+      <div class="section-header mt-3">
+        <h2 id="ml-potential-papers">ML Potential References</h2>
+        <p>Key publications for the machine learning potentials supported by MAPLE.</p>
+      </div>
 
-                <section class="article-section">
-                    <article class="article-item">
-                        <img src="assets/images/image.png" alt="MAPLE Framework" style="max-width: 100%; height: auto; margin-bottom: 1rem;">
-                        <h2>MAPLE: A General Framework for Automated Molecular Modeling Across Machine Learning Potentials</h2>
-                        <p>This paper presents MAPLE as a comprehensive framework for automated molecular modeling that works seamlessly across different machine learning potentials. The framework enables researchers to perform molecular simulations and quantum chemical calculations using various ML-based potential energy surfaces, providing a unified interface for diverse computational chemistry applications.</p>
-                        <p><a href="https://s3.eu-west-1.amazonaws.com/assets.prod.orp.cambridge.org/e4/498c26278c4141b04e41b2ed3f9b5b.pdf?AWSAccessKeyId=ASIA5XANBN3JLESTDNID&Expires=1768964096&Signature=Fh0knffCnbRNy8H5p%2BvQnvJm61o%3D&response-cache-control=no-store&response-content-disposition=inline%3B%20filename%20%3D%22maple-a-general-framework-for-automated-molecular-modeling-across-machine-learning-potentials.pdf%22&response-content-type=application%2Fpdf&x-amz-security-token=FwoGZXIvYXdzEAQaDIppZU%2B7WyK3o06o4SKtAZ3BauoymSRqVA5nmmUps7JJNT8NIC8WIuizFe5UVrI4dROrZ22Qx6ZxE%2Fz38y3DBGzmrEffdaQ3NH4UBrRdZAcP4XqEQiGTg%2BBwNsFyug9seTz1eV9umGCy96Vf2iTEutmSBXFhR%2BKD1umVHDyDrt3JjvGl1E4yOnokdqotdszEshXoX5NeYR0nsWu0Gv0R70opVvvTI6qg7FIoqxla1M0dMyLfbdD3LMfFpdDXKJf9wMsGMi2Lkppvid3GxQobit3BHcFFqKRTlZIjrPIuHedOulCXCGj2rGQG3HN6fFUC%2BNk%3D" target="_blank" rel="noopener noreferrer">Read the full paper →</a></p>
-                    </article>
-                </section>
-
-            </div>
+      <div class="card-grid">
+        <div class="card">
+          <div class="card-tag">ANI</div>
+          <h3>ANI-2x: A Transferable Neural Network Potential</h3>
+          <p>Devereux et al. Extending the applicability of the ANI deep learning potential to include organic molecules containing sulfur, fluorine, and chlorine. <em>J. Chem. Theory Comput.</em>, 2020.</p>
         </div>
-    </main>
 
-    <footer>
-        <p>&copy; 2025, MAPLE development team.</p>
-    </footer>
+        <div class="card">
+          <div class="card-tag">ANI</div>
+          <h3>ANI-1: An Extensible Neural Network Potential</h3>
+          <p>Smith et al. ANI-1: an extensible neural network potential with DFT accuracy at force field computational cost. <em>Chem. Sci.</em>, 2017.</p>
+        </div>
+
+        <div class="card">
+          <div class="card-tag">ANI</div>
+          <h3>ANI-1ccx: Approaching Coupled Cluster Accuracy</h3>
+          <p>Smith et al. Approaching coupled cluster accuracy with a general-purpose neural network potential through transfer learning. <em>Nat. Commun.</em>, 2019.</p>
+        </div>
+
+        <div class="card">
+          <div class="card-tag">AIMNet</div>
+          <h3>AIMNet2: A Neural Network Interatomic Potential</h3>
+          <p>Anstine and Isayev. AIMNet2: a neural network interatomic potential to meet your neutral and charged molecular modeling needs. 2024.</p>
+        </div>
+
+        <div class="card">
+          <div class="card-tag">MACE</div>
+          <h3>MACE-OFF: Transferable Organic Force Fields</h3>
+          <p>Kovacs et al. MACE-OFF23: transferable machine learning force fields for organic molecules. 2023.</p>
+        </div>
+
+        <div class="card">
+          <div class="card-tag">Universal</div>
+          <h3>UMA: Universal Machine-learning Architecture</h3>
+          <p>Meta FAIR. A foundation model for chemistry covering broad chemical space with a single unified interatomic potential.</p>
+        </div>
+
+        <div class="card">
+          <div class="card-tag">Equivariant</div>
+          <h3>EGRET: Equivariant Graph Network</h3>
+          <p>An equivariant graph neural network potential for reactive and non-reactive molecular simulations.</p>
+        </div>
+      </div>
+    </article>
+  </div>
+
+  <footer>
+    <p>&copy; 2026, MAPLE development team.</p>
+  </footer>
+  <script src="assets/js/main.js"></script>
 </body>
 </html>
-

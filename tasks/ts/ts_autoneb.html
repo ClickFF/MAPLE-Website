@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Nudged Elastic Band (NEB) - MAPLE</title>
+  <title>AutoNEB (Automated NEB) - MAPLE</title>
   <link rel="stylesheet" href="../../assets/css/styles.css">
 </head>
 <body>
@@ -72,10 +72,10 @@
                   <span class="tree-label"><span class="chevron"></span> <a href="ts.html">Transition State</a></span>
                   <ul class="children">
                     <li><a href="ts_prfo.html">P-RFO</a></li>
-                    <li><a href="ts_neb.html" class="active">NEB</a></li>
+                    <li><a href="ts_neb.html">NEB</a></li>
                     <li><a href="ts_dimmer.html">Dimer</a></li>
                     <li><a href="ts_string.html">String/GSM</a></li>
-                    <li><a href="ts_autoneb.html">AutoNEB</a></li>
+                    <li><a href="ts_autoneb.html" class="active">AutoNEB</a></li>
                   </ul>
                 </li>
                 <li>
@@ -118,15 +118,25 @@
         <span class="separator">/</span>
         <a href="ts.html">Transition State</a>
         <span class="separator">/</span>
-        <span class="current">NEB</span>
+        <span class="current">AutoNEB</span>
       </nav>
 
       <article>
-        <h1>Nudged Elastic Band (NEB)</h1>
+        <h1>AutoNEB (Automated NEB)</h1>
 
         <h2 id="overview">Overview</h2>
-        <p>The Nudged Elastic Band (NEB) method is a chain-of-states approach for finding the minimum energy path (MEP) between a known reactant and product. A series of intermediate images are connected by spring forces and optimized simultaneously. The "nudging" procedure projects out the perpendicular component of the spring force and the parallel component of the true force, ensuring that the images converge to the MEP rather than sliding down to the endpoints.</p>
-        <p>MAPLE's NEB implementation uses Image Dependent Pair Potential (IDPP) interpolation to generate a physically reasonable initial path, dynamic spring constants to improve image distribution near the transition state, and an L-BFGS optimizer for efficient band relaxation.</p>
+        <p>AutoNEB is an automated multi-step NEB workflow designed for complex reactions that involve multiple intermediates and transition states. Rather than requiring the user to manually identify each elementary step, AutoNEB recursively subdivides the reaction path between a given reactant and product, automatically discovering all stationary points along the way.</p>
+        <p>This method is particularly valuable for multi-step reaction mechanisms where the number and nature of intermediates are not known in advance. AutoNEB handles the entire workflow automatically: running NEB calculations, identifying intermediates, and recursively refining each segment of the path until all transition states and intermediates have been located.</p>
+
+        <h2 id="how-it-works">How It Works</h2>
+        <p>The AutoNEB algorithm proceeds through the following stages:</p>
+        <ol>
+          <li><strong>Initial NEB.</strong> A standard NEB calculation is performed between the overall reactant and product structures, producing an initial minimum energy path.</li>
+          <li><strong>Identify highest-energy images.</strong> The highest-energy images (HEIs) along the converged path are identified as candidate transition states. Images in local energy minima along the path are identified as candidate intermediates.</li>
+          <li><strong>Optimize intermediates.</strong> Candidate intermediate structures are optimized to true local minima using geometry optimization.</li>
+          <li><strong>Recursive subdivision.</strong> New NEB calculations are launched between each pair of adjacent stationary points (minima). This process repeats recursively, building a tree of NEB calculations that progressively resolves the full reaction mechanism.</li>
+          <li><strong>Collect results.</strong> All transition state and intermediate structures are collected into a unified global MEP. The recursion terminates when no new intermediates are found in any segment, or when the maximum tree depth is reached.</li>
+        </ol>
 
         <h2 id="parameters">Parameters</h2>
         <div class="table-wrapper">
@@ -143,8 +153,8 @@
               <tr>
                 <td><code>n_images</code></td>
                 <td>int</td>
-                <td>10</td>
-                <td>Number of internal images along the path (excluding fixed endpoints).</td>
+                <td>20</td>
+                <td>Number of initial NEB images.</td>
               </tr>
               <tr>
                 <td><code>k_min</code></td>
@@ -162,31 +172,31 @@
                 <td><code>use_dynamic_k</code></td>
                 <td>bool</td>
                 <td>True</td>
-                <td>Enable energy-weighted dynamic spring constants.</td>
+                <td>Enable dynamic spring constants.</td>
               </tr>
               <tr>
                 <td><code>k_decay</code></td>
                 <td>float</td>
                 <td>0.5</td>
-                <td>Decay factor for dynamic spring constant weighting.</td>
+                <td>Dynamic spring constant decay factor.</td>
               </tr>
               <tr>
                 <td><code>max_iter</code></td>
                 <td>int</td>
-                <td>500</td>
-                <td>Maximum L-BFGS optimization iterations for the NEB band.</td>
+                <td>256</td>
+                <td>Maximum NEB iterations per sub-path.</td>
               </tr>
               <tr>
                 <td><code>lbfgs_m</code></td>
                 <td>int</td>
-                <td>20</td>
-                <td>L-BFGS memory for the NEB optimizer.</td>
+                <td>10</td>
+                <td>L-BFGS memory for band optimization.</td>
               </tr>
               <tr>
                 <td><code>step0</code></td>
                 <td>float</td>
                 <td>2e-2</td>
-                <td>Initial step length for the L-BFGS optimizer.</td>
+                <td>Initial L-BFGS step size.</td>
               </tr>
               <tr>
                 <td><code>ifidpp</code></td>
@@ -195,67 +205,102 @@
                 <td>IDPP interpolation flag (1=IDPP, 0=linear).</td>
               </tr>
               <tr>
-                <td><code>neb_f_max_th</code></td>
+                <td><code>ang_max</code></td>
                 <td>float</td>
-                <td>9.5e-3</td>
-                <td>Max force convergence threshold for NEB.</td>
+                <td>0.3</td>
+                <td>Max distance between adjacent images (Angstrom).</td>
               </tr>
               <tr>
-                <td><code>neb_f_rms_th</code></td>
-                <td>float</td>
-                <td>5e-3</td>
-                <td>RMS force convergence threshold for NEB.</td>
-              </tr>
-              <tr>
-                <td><code>initial_opt</code></td>
-                <td>bool</td>
-                <td>False</td>
-                <td>Optimize endpoints before building the NEB path.</td>
-              </tr>
-              <tr>
-                <td><code>refine</code></td>
-                <td>str</td>
-                <td>None</td>
-                <td>Post-NEB refinement: None, "cineb", or "nebts".</td>
-              </tr>
-              <tr>
-                <td><code>cineb_f_max_th</code></td>
-                <td>float</td>
-                <td>1e-2</td>
-                <td>Max force threshold for CI-NEB refinement.</td>
-              </tr>
-              <tr>
-                <td><code>cineb_f_rms_th</code></td>
-                <td>float</td>
-                <td>1e-2</td>
-                <td>RMS force threshold for CI-NEB refinement.</td>
-              </tr>
-              <tr>
-                <td><code>cilbfgs_m</code></td>
+                <td><code>ang_iter</code></td>
                 <td>int</td>
                 <td>20</td>
-                <td>L-BFGS memory for CI-NEB optimizer.</td>
+                <td>Check for image insertion every N iterations.</td>
               </tr>
               <tr>
-                <td><code>cistep0</code></td>
+                <td><code>path_iter</code></td>
+                <td>int</td>
+                <td>50</td>
+                <td>Check for local minima every N iterations.</td>
+              </tr>
+              <tr>
+                <td><code>min_e_drop</code></td>
+                <td>float</td>
+                <td>0.001</td>
+                <td>Energy drop threshold for minima detection (Eh).</td>
+              </tr>
+              <tr>
+                <td><code>ep_iter</code></td>
+                <td>int</td>
+                <td>30</td>
+                <td>Check endpoint updates every N iterations.</td>
+              </tr>
+              <tr>
+                <td><code>ep_e_drop</code></td>
+                <td>float</td>
+                <td>0.0005</td>
+                <td>Energy drop for endpoint update (Eh).</td>
+              </tr>
+              <tr>
+                <td><code>autoneb_f_max_th</code></td>
+                <td>float</td>
+                <td>9.5e-3</td>
+                <td>Max force convergence threshold.</td>
+              </tr>
+              <tr>
+                <td><code>autoneb_f_rms_th</code></td>
                 <td>float</td>
                 <td>5e-3</td>
-                <td>Initial step for CI-NEB optimizer.</td>
+                <td>RMS force convergence threshold.</td>
+              </tr>
+              <tr>
+                <td><code>max_depth</code></td>
+                <td>int</td>
+                <td>5</td>
+                <td>Maximum recursion depth for path subdivision.</td>
+              </tr>
+              <tr>
+                <td><code>max_paths</code></td>
+                <td>int</td>
+                <td>10</td>
+                <td>Maximum number of sub-paths.</td>
+              </tr>
+              <tr>
+                <td><code>do_final_refine</code></td>
+                <td>bool</td>
+                <td>True</td>
+                <td>Perform final CI-NEB refinement.</td>
+              </tr>
+              <tr>
+                <td><code>final_refine_factor</code></td>
+                <td>float</td>
+                <td>2.0</td>
+                <td>Image density factor for final refinement.</td>
+              </tr>
+              <tr>
+                <td><code>final_refine_max_iter</code></td>
+                <td>int</td>
+                <td>200</td>
+                <td>Max iterations for final refinement.</td>
+              </tr>
+              <tr>
+                <td><code>final_refine_ep_iter</code></td>
+                <td>int</td>
+                <td>20</td>
+                <td>Endpoint check interval during final refinement.</td>
+              </tr>
+              <tr>
+                <td><code>verbose</code></td>
+                <td>int</td>
+                <td>1</td>
+                <td>Output verbosity level.</td>
               </tr>
             </tbody>
           </table>
         </div>
 
-        <h2 id="refinement-options">Refinement Options</h2>
-        <h3>CI-NEB (Climbing Image NEB)</h3>
-        <p>When <code>refine=cineb</code> is set, the highest-energy image (HEI) is freed from spring forces and instead climbs along the band tangent toward the true saddle point. The remaining images continue to be optimized with springs. This gives a more accurate TS estimate without requiring a separate local TS optimizer.</p>
-
-        <h3>NEBTS (NEB + TS Refinement)</h3>
-        <p>When <code>refine=nebts</code> is set, MAPLE first performs CI-NEB to refine the HEI, then applies a P-RFO local TS optimizer starting from the climbing image. This two-stage approach provides the most accurate TS geometry and is recommended for production calculations.</p>
-
         <h2 id="input-example">Input Example</h2>
         <pre><code>#model=ani1xnr
-#ts(method=neb,refine=nebts)
+#ts(method=autoneb)
 #device=gpu0
 
 XYZ /path/to/reactant.xyz
@@ -263,25 +308,36 @@ XYZ /path/to/product.xyz</code></pre>
 
         <h2 id="output-files">Output Files</h2>
         <ul>
-          <li><code>*_mep.xyz</code> &mdash; Multi-frame XYZ file containing all images along the converged minimum energy path.</li>
-          <li><code>*_hei.xyz</code> &mdash; The highest-energy image extracted from the converged NEB band.</li>
-          <li><code>*_cineb_*.xyz</code> &mdash; Climbing-image NEB trajectory and converged path (when <code>refine=cineb</code> or <code>refine=nebts</code>).</li>
-          <li><code>*_nebts_ts.xyz</code> &mdash; Final optimized TS geometry from P-RFO refinement (when <code>refine=nebts</code>).</li>
+          <li><code>*_autoneb_global_mep.xyz</code> &mdash; The complete global minimum energy path spanning all elementary steps, from the initial reactant through all intermediates to the final product.</li>
+          <li><code>*_autoneb_intermediates.xyz</code> &mdash; Optimized geometries of all intermediate structures discovered during the recursive search.</li>
+          <li><code>*_autoneb_ts_list.xyz</code> &mdash; All transition state geometries found across every segment of the reaction mechanism.</li>
+          <li><code>*_autoneb_path_*.xyz</code> &mdash; Individual MEP files for each NEB segment in the recursive tree (numbered sequentially).</li>
+          <li><code>*_autoneb_tree.json</code> &mdash; JSON file describing the recursion tree structure, including parent-child relationships between NEB segments, energies, and convergence status.</li>
         </ul>
 
-        <div class="admonition important">
+        <div class="admonition tip">
           <div class="admonition-title">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
-            Important
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+            Tip
           </div>
           <div class="admonition-body">
-            <p>Always ensure your reactant and product endpoint geometries are properly optimized before running NEB. Poorly optimized endpoints introduce artificial forces into the band and can prevent convergence or lead to incorrect MEPs. Use <code>initial_opt=true</code> or run separate optimization calculations beforehand.</p>
+            <p>AutoNEB is ideal for reactions with multiple intermediates, such as enzyme mechanisms, catalytic cycles, or multi-step organic transformations. If you suspect your reaction has more than one elementary step, AutoNEB can discover the full mechanism automatically without requiring you to guess the intermediates.</p>
+          </div>
+        </div>
+
+        <div class="admonition warning">
+          <div class="admonition-title">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+            Warning
+          </div>
+          <div class="admonition-body">
+            <p>AutoNEB can be computationally expensive for deep reaction networks. Each level of recursion spawns additional NEB calculations, and the total cost grows with the number of elementary steps discovered. For very complex mechanisms, consider limiting <code>max_depth</code> or using a smaller <code>n_images</code> value for the initial exploration, then refining specific segments with higher resolution.</p>
           </div>
         </div>
 
         <nav class="page-nav">
-          <a href="ts_prfo.html">&larr; Previous: P-RFO</a>
-          <a class="next" href="ts_dimmer.html">Next: Dimer &rarr;</a>
+          <a href="ts_string.html">&larr; Previous: String/GSM</a>
+          <a class="next" href="../scan/scan.html">Next: PES Scan &rarr;</a>
         </nav>
       </article>
     </main>

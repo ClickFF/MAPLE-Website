@@ -1,104 +1,253 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Transition State Method: PRFO - MAPLE</title>
-    <link rel="stylesheet" href="../../assets/css/styles.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>P-RFO (Partitioned Rational Function Optimization) - MAPLE</title>
+  <link rel="stylesheet" href="../../assets/css/styles.css">
 </head>
 <body>
-    <main>
-        <div class="content-wrapper">
-            <aside class="navigation-section">
-                <a href="../../index.html"><img src="../../assets/images/logo.jpg" alt="MAPLE Logo" style="width: 80px; height: 80px; object-fit: contain; display: block; margin-bottom: 1.5rem; cursor: pointer; background: transparent; border: none;"></a>
-                <h2>Navigation</h2>
-				<ul class="nav-list">
-                    <li><a href="#tutorials">User Guide</a></li>
-                    <li><a href="../../general.html">About MAPLE</a></li>
-                    <li><a href="../../documentation.html">Documentation</a></li>
-                    <li><a href="../../index.html">Home</a></li>
-                    <li><a href="#articles">Articles</a></li>
-                    <li><a href="#download">Downloads</a></li>
-                    <li><a href="#issues">Report an issue</a></li>
-                    <li><a href="#development">Development</a></li>
-                </ul>
-            </aside>
+  <header class="top-nav">
+    <div class="container">
+      <div class="brand">
+        <a href="../../index.html"><img src="../../assets/images/logo.jpg" alt="MAPLE Logo"></a>
+        <a href="../../index.html">MAPLE</a>
+      </div>
+      <button class="mobile-toggle" aria-label="Toggle menu">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+      </button>
+      <nav>
+        <ul>
+          <li><a href="../../index.html">Home</a></li>
+          <li><a href="../../general.html">About</a></li>
+          <li><a href="../../documentation.html">Documentation</a></li>
+          <li><a href="../../articles.html">Articles</a></li>
+          <li><a href="../../downloads.html">Downloads</a></li>
+          <li><a href="../../development.html">Development</a></li>
+          <li><a href="../../issues.html">Report Issue</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
 
-            <div class="main-content">
-                <section class="welcome-section">
-                    <h1>Transition State Method: PRFO</h1>
-                    <p class="tagline">Partitioned Rational Function Optimization for transition-state search.</p>
-                </section>
-
-                <section class="new-section">
-                    <p>PRFO (Partitioned Rational Function Optimization) in this code is implemented as an RS-PRFO transition-state search: it combines dual-shift PRFO steps with a trust-region framework and mode-following in mass-weighted coordinates. At each accepted step, the Cartesian Hessian is recomputed, mass-weighted, and diagonalized to track the lowest-curvature mode and adapt the trust radius according to the agreement between the quadratic model and the actual energy change. The parameters listed below are internal control parameters that are fixed in the current implementation; they can only be changed by editing the source code, not via input keywords.</p>
-                </section>
-
-                <section class="new-section">
-                    <h2>I. Internal Control Parameters</h2>
-                    
-                    <h3>max_iter</h3>
-                    <p>Maximum number of TS search iterations. Limits the number of accepted RS-PRFO steps before the transition-state search stops.</p>
-                    <p><strong>(default: max_iter=256)</strong></p>
-
-                    <h3>trust_radius</h3>
-                    <p>Initial trust-region radius (MW coordinates). Sets the initial bound on the step length in mass-weighted coordinate space; larger values allow more aggressive early steps.</p>
-                    <p><strong>(default: trust_radius=0.2)</strong></p>
-
-                    <h3>trust_min</h3>
-                    <p>Minimum trust-region radius. Smallest allowed trust radius; when the model is poor, the radius is repeatedly shrunk but never below this value, preventing vanishingly small steps.</p>
-                    <p><strong>(default: trust_min=1.0e-3)</strong></p>
-
-                    <h3>trust_max</h3>
-                    <p>Maximum trust-region radius. Upper bound for the trust radius; when the quadratic model is accurate and steps lie on the boundary, the radius can be expanded but not beyond this limit.</p>
-                    <p><strong>(default: trust_max=1.0)</strong></p>
-
-                    <h3>eta_shrink</h3>
-                    <p>Model-quality threshold for shrinking. If the ratio ρ between the actual and predicted energy change is too small or non-finite, the trial step is rejected, the geometry is rolled back, and the trust radius is reduced.</p>
-                    <p><strong>(default: eta_shrink=0.75)</strong></p>
-
-                    <h3>eta_expand</h3>
-                    <p>Model-quality threshold for expansion. If ρ is sufficiently large and the step lies on the trust-region boundary, the step is accepted and the trust radius is expanded for the next iteration to accelerate convergence.</p>
-                    <p><strong>(default: eta_expand=1.75)</strong></p>
-                </section>
-
-                <section class="new-section">
-                    <h2>II. Output Files</h2>
-                    <p>When using ts(method=prfo), the PRFO transition-state search produces one main human-readable output file:</p>
-                    
-                    <h3>Main Output File: *.out</h3>
-                    <p>All information about the transition-state search, including the evolving geometries and convergence diagnostics, is contained in the main output file.</p>
-                    
-                    <p class="code-example">Example:<br>Iteration: 1<br>lambda1: N/A(PRFO), lambda2: N/A(PRFO)<br>lowest eigenvalue: -0.334377259016037, second lowest eigenvalue: -0.1735847294330597<br><br>Coordinates<br>----------------------------------------------------------------------<br>0   C               -0.8258              -1.1301               0.1440<br>1   C                1.2480               0.0799               0.0361<br>2   C               -0.7595               1.7950               0.7768<br>...<br><br>Energy:               -1970.331031 Convergence criteria  Is converged<br>Maximum Force:            0.053068     0.000450                No<br>RMS Force:                 0.027608     0.000300                No<br>Maximum Displacement:      0.042010     0.001800                No<br>RMS Displacement:          0.042640     0.001200                No</p>
-
-                    <h3>Explanation:</h3>
-                    <ul>
-                        <li>"Iteration: 1" is the index of the current accepted PRFO step. If further iterations follow, the transition-state search has not yet converged.</li>
-                        <li>"lambda1 / lambda2" are reserved for other TS methods and appear as "N/A(PRFO)" here; they can be ignored for PRFO.</li>
-                        <li>"lowest eigenvalue" and "second lowest eigenvalue" are the two smallest Cartesian Hessian eigenvalues at this geometry. A well-converged first-order TS is expected to have one dominant negative eigenvalue and all other eigenvalues positive or close to zero.</li>
-                        <li>The "Coordinates" table lists the current Cartesian coordinates <strong>(Å)</strong> after this PRFO step and can be used to inspect structural changes along the TS search.</li>
-                        <li>"Energy" is the total energy at this geometry; it is mainly useful to monitor changes between successive iterations rather than as an absolute value. The four lines "Maximum/RMS Force" and "Maximum/RMS Displacement" report the current values versus their thresholds. In normal termination, the TS is considered converged and the PRFO search stops when all four entries are marked "Yes" in the final iteration.</li>
-                    </ul>
-
-                    <h3>PRFO Geometry Trajectory File: prfo.xyz</h3>
-                    <p>All geometries generated along the PRFO transition-state search are stored in this multi-frame XYZ file and can be visualized as a structural trajectory in standard molecular viewers.</p>
-                    
-                    <p class="code-example">Example:<br>22<br>Frame 1: 1<br>C  -0.8675   -1.1212   0.1451<br>C  1.2063   0.0888   0.0375<br>C  -0.8012   1.8039   0.7777<br>...</p>
-
-                    <h3>Explanation:</h3>
-                    <ul>
-                        <li>The first line ("22") is the number of atoms in the system.</li>
-                        <li>The second line ("Frame 1: 1") is a free comment line used as a frame label. It typically encodes the frame index along the PRFO search and/or an internal iteration counter; it has no effect on the coordinates and can be ignored by most visualization programs.</li>
-                        <li>Each subsequent line in the frame gives one atom: the element symbol in the first column followed by the x, y, z Cartesian coordinates (in <strong>Å</strong>).</li>
-                        <li>If the file contains multiple frames, the same pattern is repeated for each geometry. Such a file can be loaded into visualization software as a trajectory to inspect how the structure evolves along the PRFO transition-state search.</li>
-                    </ul>
-                </section>
-            </div>
+  <div class="page-layout">
+    <aside class="sidebar">
+      <nav class="sidebar-nav">
+        <div class="sidebar-brand">
+          <img src="../../assets/images/logo.jpg" alt="MAPLE">
+          <span>MAPLE Docs</span>
         </div>
+        <div class="sidebar-tree">
+          <ul>
+            <li>
+              <span class="tree-section"><span class="chevron"></span> Getting Started</span>
+              <ul class="children">
+                <li><a href="../../tutorials/installation.html">Installation</a></li>
+                <li><a href="../../tutorials/quickstart.html">Quick Start</a></li>
+                <li><a href="../../tutorials/input_output.html">Input &amp; Output</a></li>
+              </ul>
+            </li>
+            <li>
+              <span class="tree-section"><span class="chevron"></span> Input Setup</span>
+              <ul class="children">
+                <li><a href="../../setup/settings.html">Settings</a></li>
+                <li><a href="../../setup/coordinates.html">Coordinates</a></li>
+                <li><a href="../../setup/models.html">ML Models</a></li>
+              </ul>
+            </li>
+            <li class="open">
+              <span class="tree-section"><span class="chevron"></span> Tasks</span>
+              <ul class="children">
+                <li><a href="../../tasks/singlepoint.html">Single Point</a></li>
+                <li><a href="../../tasks/frequency.html">Frequency</a></li>
+                <li>
+                  <span class="tree-label"><span class="chevron"></span> <a href="../opt/optimization.html">Optimization</a></span>
+                  <ul class="children">
+                    <li><a href="../opt/opt_lbfgs.html">L-BFGS</a></li>
+                    <li><a href="../opt/opt_rfo.html">RFO</a></li>
+                    <li><a href="../opt/opt_sd.html">SD</a></li>
+                  </ul>
+                </li>
+                <li class="open">
+                  <span class="tree-label"><span class="chevron"></span> <a href="ts.html">Transition State</a></span>
+                  <ul class="children">
+                    <li><a href="ts_prfo.html" class="active">P-RFO</a></li>
+                    <li><a href="ts_neb.html">NEB</a></li>
+                    <li><a href="ts_dimmer.html">Dimer</a></li>
+                    <li><a href="ts_string.html">String/GSM</a></li>
+                    <li><a href="ts_autoneb.html">AutoNEB</a></li>
+                  </ul>
+                </li>
+                <li>
+                  <span class="tree-label"><span class="chevron"></span> <a href="../scan/scan.html">PES Scan</a></span>
+                  <ul class="children">
+                    <li><a href="../scan/scan_lbfgs.html">L-BFGS</a></li>
+                    <li><a href="../scan/scan_rfo.html">RFO</a></li>
+                  </ul>
+                </li>
+                <li>
+                  <span class="tree-label"><span class="chevron"></span> <a href="../irc/irc.html">IRC</a></span>
+                  <ul class="children">
+                    <li><a href="../irc/irc_gs.html">GS</a></li>
+                    <li><a href="../irc/irc_lqa.html">LQA</a></li>
+                    <li><a href="../irc/irc_hpc.html">HPC</a></li>
+                    <li><a href="../irc/irc_eulerpc.html">EulerPC</a></li>
+                  </ul>
+                </li>
+              </ul>
+            </li>
+            <li>
+              <span class="tree-section"><span class="chevron"></span> Functions</span>
+              <ul class="children">
+                <li><a href="../../functions/solvent.html">Solvation</a></li>
+                <li><a href="../../functions/constrain.html">Constraints</a></li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </nav>
+    </aside>
+
+    <main class="content">
+      <nav class="breadcrumb">
+        <a href="../../index.html">Home</a>
+        <span class="separator">/</span>
+        <a href="../../documentation.html">Docs</a>
+        <span class="separator">/</span>
+        <a href="../../documentation.html">Tasks</a>
+        <span class="separator">/</span>
+        <a href="ts.html">Transition State</a>
+        <span class="separator">/</span>
+        <span class="current">P-RFO</span>
+      </nav>
+
+      <article>
+        <h1>P-RFO (Partitioned Rational Function Optimization)</h1>
+
+        <h2 id="overview">Overview</h2>
+        <p>P-RFO is a second-order saddle point optimizer based on the Partitioned Rational Function Optimization algorithm. It works by partitioning the Hessian eigenspace into one mode to maximize along (the reaction coordinate) and all remaining modes to minimize along. This dual-shift approach, combined with a trust-region framework and mode-following in mass-weighted coordinates, efficiently converges to the nearest first-order saddle point from an initial guess geometry.</p>
+        <p>P-RFO is the default TS refinement method in MAPLE and is the final optimization step used by <code>refine=nebts</code> after NEB or String calculations. It requires a good starting geometry that is already close to the true TS.</p>
+
+        <h2 id="parameters">Parameters</h2>
+        <div class="table-wrapper">
+          <table>
+            <thead>
+              <tr>
+                <th>Parameter</th>
+                <th>Type</th>
+                <th>Default</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>max_iter</code></td>
+                <td>int</td>
+                <td>256</td>
+                <td>Maximum number of optimization cycles.</td>
+              </tr>
+              <tr>
+                <td><code>trust_radius</code></td>
+                <td>float</td>
+                <td>0.2</td>
+                <td>Initial trust radius in Angstrom.</td>
+              </tr>
+              <tr>
+                <td><code>trust_min</code></td>
+                <td>float</td>
+                <td>1e-3</td>
+                <td>Minimum trust radius.</td>
+              </tr>
+              <tr>
+                <td><code>trust_max</code></td>
+                <td>float</td>
+                <td>1.0</td>
+                <td>Maximum trust radius.</td>
+              </tr>
+              <tr>
+                <td><code>eta_shrink</code></td>
+                <td>float</td>
+                <td>0.75</td>
+                <td>Trust radius shrink factor when step is poor.</td>
+              </tr>
+              <tr>
+                <td><code>eta_expand</code></td>
+                <td>float</td>
+                <td>1.75</td>
+                <td>Trust radius expansion factor when step is good.</td>
+              </tr>
+              <tr>
+                <td><code>evals_eps</code></td>
+                <td>float</td>
+                <td>1e-10</td>
+                <td>Eigenvalue epsilon for numerical stability.</td>
+              </tr>
+              <tr>
+                <td><code>mu_margin</code></td>
+                <td>float</td>
+                <td>1e-8</td>
+                <td>Margin for the level-shift parameter.</td>
+              </tr>
+              <tr>
+                <td><code>max_bisect_it</code></td>
+                <td>int</td>
+                <td>60</td>
+                <td>Maximum bisection iterations for level-shift.</td>
+              </tr>
+              <tr>
+                <td><code>f_max_th</code></td>
+                <td>float</td>
+                <td>9.5e-3</td>
+                <td>Max force convergence threshold (Hartree/Bohr).</td>
+              </tr>
+              <tr>
+                <td><code>f_rms_th</code></td>
+                <td>float</td>
+                <td>5e-3</td>
+                <td>RMS force convergence threshold.</td>
+              </tr>
+              <tr>
+                <td><code>dp_max_th</code></td>
+                <td>float</td>
+                <td>1.8e-3</td>
+                <td>Max displacement convergence threshold (Bohr).</td>
+              </tr>
+              <tr>
+                <td><code>dp_rms_th</code></td>
+                <td>float</td>
+                <td>1.2e-3</td>
+                <td>RMS displacement convergence threshold.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h2 id="input-example">Input Example</h2>
+        <pre><code>#model=ani1xnr
+#ts(method=prfo)
+#device=gpu0
+
+XYZ /path/to/ts_guess.xyz</code></pre>
+
+        <h2 id="tips">Tips</h2>
+        <ul>
+          <li><strong>Start from a good guess.</strong> The best starting geometry is typically the highest-energy image (HEI) from a converged NEB or String calculation. You can extract this from the <code>*_hei.xyz</code> output file.</li>
+          <li><strong>Verify with a frequency calculation.</strong> After P-RFO converges, always run a frequency calculation to confirm exactly one imaginary frequency. If there are multiple imaginary frequencies, the converged structure may be a higher-order saddle point.</li>
+          <li><strong>Use <code>refine=nebts</code> for automation.</strong> Rather than running P-RFO manually, you can set <code>refine=nebts</code> in your NEB or String input to automatically apply P-RFO refinement after the path search completes.</li>
+          <li><strong>Trust radius adjustment.</strong> If P-RFO oscillates or fails to converge, consider providing a geometry closer to the true TS. The trust-region mechanism will automatically adapt the step size, but a poor initial guess can cause the search to wander.</li>
+        </ul>
+
+        <nav class="page-nav">
+          <a href="ts.html">&larr; Previous: Transition State</a>
+          <a class="next" href="ts_neb.html">Next: NEB &rarr;</a>
+        </nav>
+      </article>
     </main>
 
-    <footer>
-        <p>&copy; 2025, MAPLE development team.</p>
-    </footer>
+    <aside class="toc"><div class="toc-sticky"><h3>On this page</h3><ul></ul></div></aside>
+  </div>
+  <div class="sidebar-overlay"></div>
+  <footer><p>&copy; 2026, MAPLE development team.</p></footer>
+  <script src="../../assets/js/main.js"></script>
 </body>
 </html>

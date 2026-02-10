@@ -1,131 +1,200 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>About MAPLE - General Introduction</title>
-    <link rel="stylesheet" href="assets/css/styles.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About MAPLE — Machine-learning Potential for Landscape Exploration</title>
+  <link rel="stylesheet" href="assets/css/styles.css">
 </head>
 <body>
-    <header class="top-nav">
-        <div class="container">
-            <div class="brand">
-                <a href="index.html"><img src="assets/images/logo.jpg" alt="MAPLE Logo"></a>
-                <a href="index.html">MAPLE</a>
-            </div>
-            <nav>
-                <ul>
-                    <li><a href="index.html">Home</a></li>
-                    <li><a href="general.html">About MAPLE</a></li>
-                    <li><a href="documentation.html">User Guide</a></li>
-                    <li><a href="articles.html">Articles</a></li>
-                    <li><a href="downloads.html">Downloads</a></li>
-                    <li><a href="issues.html">Report an issue</a></li>
-                    <li><a href="development.html">Development</a></li>
-                </ul>
-            </nav>
+  <header class="top-nav">
+    <div class="container">
+      <div class="brand">
+        <a href="index.html"><img src="assets/images/logo.jpg" alt="MAPLE Logo"></a>
+        <a href="index.html">MAPLE</a>
+      </div>
+      <button class="mobile-toggle" aria-label="Toggle menu">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+      </button>
+      <nav>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="general.html" class="active">About</a></li>
+          <li><a href="documentation.html">Documentation</a></li>
+          <li><a href="articles.html">Articles</a></li>
+          <li><a href="downloads.html">Downloads</a></li>
+          <li><a href="development.html">Development</a></li>
+          <li><a href="issues.html">Report Issue</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <div class="page-hero">
+    <h1>About MAPLE</h1>
+    <p class="subtitle">A fast, GPU-accelerated computational chemistry toolkit powered by machine learning potentials for molecular modeling and quantum chemical calculations.</p>
+  </div>
+
+  <div class="page-body">
+    <article>
+      <h2 id="what-is-maple">What is MAPLE?</h2>
+      <p>MAPLE (Machine-learning Potential for Landscape Exploration) is a computational chemistry software package designed for molecular modeling and quantum chemical calculations. It provides a unified computational environment suitable for research at different theoretical levels, from small molecules to complex reaction networks.</p>
+      <p>MAPLE leverages modern machine learning potentials to achieve near-DFT accuracy at a fraction of the computational cost of traditional quantum mechanical methods. Its modular design allows users to perform a wide variety of calculations within a consistent framework, with flexible control over computational parameters and accuracy requirements.</p>
+      <p>All energy values in MAPLE are expressed in <strong>Hartree</strong>, and all distances are expressed in <strong>Angstroms</strong>.</p>
+
+      <h2 id="ml-potentials">Supported ML Potentials</h2>
+      <p>MAPLE supports a wide range of machine learning interatomic potentials. Each model offers different trade-offs between speed, accuracy, and element coverage.</p>
+
+      <div class="card-grid">
+        <div class="card">
+          <div class="card-tag">ANI Family</div>
+          <h3>ANI-2x</h3>
+          <p>General-purpose neural network potential supporting H, C, N, O, S, F, Cl. Trained on DFT data with active learning.</p>
         </div>
-    </header>
-
-    <main>
-        <div class="content-wrapper">
-            <div class="main-content">
-                <section class="welcome-section">
-                    <h1>MAPLE - General Introduction</h1>
-                    <p class="tagline">A computational chemistry software package designed for molecular modeling and quantum chemical calculations.</p>
-                </section>
-
-                <section class="new-section">
-                    <p>MAPLE is a computational chemistry software package designed for molecular modeling and quantum chemical calculations. It provides a unified computational environment suitable for research at different theoretical levels. The software can handle a wide variety of chemical systems, ranging from small molecules to complex reaction networks.
-                        Its modular design allows users to perform different types of calculations within a consistent framework and to flexibly control computational parameters and accuracy requirements.</p>
-                </section>
-
-                <section class="new-section">
-                    <h2>Supported Job Types</h2>
-                    <p>MAPLE currently supports the following major job types:</p>
-                    <ul>
-                        <li><strong><a href="tasks/singlepoint.html">Single Point</a></strong>: Compute molecular energies and related properties at fixed geometries.</li>
-                        <li><strong><a href="tasks/opt/optimization.html">Optimization</a></strong>: Locate equilibrium geometries based on user-defined convergence criteria.</li>
-                        <li><strong><a href="tasks/scan/scan.html">Scan</a></strong>: Map potential energy changes along specified structural coordinates.</li>
-                        <li><strong>Frequency</strong>: Calculate vibrational frequencies and thermodynamic corrections.</li>
-                        <li><strong><a href="tasks/ts/ts.html">Transition State</a></strong>: Search for reaction saddle points using various algorithms.</li>
-                        <li><strong><a href="tasks/irc/irc.html">IRC</a></strong>: Trace the intrinsic reaction coordinate connecting reactants and products through a transition state.</li>
-                    </ul>
-                    <p>All modules in MAPLE maintain consistent input structure, parameter naming, and output format, allowing users to efficiently switch between different computational tasks.</p>
-                </section>
-
-                <section class="new-section">
-                    <h2>Part I - Setting</h2>
-                    <p>MAPLE input files (.inp) consist of three main sections, each for specific instructions and parameters, as detailed below.</p>
-                    <p>All control commands in the .inp file begin with the "#" symbol. This section defines the calculation type, selects the model, specifies the computational device, sets method parameters, and configures other global options.
-                    During input processing, these commands are parsed first to determine the calculation task and its parameter settings.</p>
-                    
-                    <h3>#model=</h3>
-                    <p>Specifies the machine learning potential model to be used for the calculation. Supported models include ani2x, ani1x, ani1ccx, ani1xnr, maceoff23s, maceoff23m, maceoff23l, egret, aimnet2, and uma.</p>
-                    <p class="code-example">Example: #model = ani2x</p>
-
-                    <h3>#device=</h3>
-                    <p>Specifies the hardware device on which the calculation will run. Supported options include cpu, cuda, gpu0, gpu1, etc.</p>
-                    <p class="code-example">Example: #device = cpu<br>#device = cuda<br>#device = gpu0</p>
-
-                    <h3>#gpuid=</h3>
-                    <p>Specifies the GPU device ID. Only integer values such as 0 or 1 are accepted.</p>
-                    <p class="code-example">Example: #gpuid = 0</p>
-
-                    <h3>#d4=</h3>
-                    <p>A global boolean flag used to enable or disable the D4 dispersion correction.</p>
-                    <p class="code-example">Example: #d4 = true<br>#d4 = false<br>#d4 (equivalent to #d4 = true)</p>
-
-                    <h3>Task type configuration</h3>
-                    <p>We support several computational tasks, including <strong><a href="tasks/singlepoint.html">sp</a></strong> (Single Point), <strong><a href="tasks/opt/optimization.html">opt</a></strong> (Optimization), <strong><a href="tasks/scan/scan.html">scan</a></strong> (Scan), <strong>freq</strong> (Frequency), <strong><a href="tasks/ts/ts.html">ts</a></strong> (Transition State), and <strong><a href="tasks/irc/irc.html">irc</a></strong> (IRC).</p>
-                    <p>Task Syntax: <strong>#taskname(parameters)</strong> A task is invoked by writing the task keyword after "#", and parameter values (if any) are set inside parentheses.</p>
-                    <p class="code-example">Example: #opt(method=lbfgs, convergence=1e-5)</p>
-                    <p><strong>Note:</strong></p>
-                    <ul>
-                        <li>If only the task name is given and no parameters are provided, the program automatically uses the default parameter set for that job type. Example: #ts</li>
-                        <li>If the input file does not define any task type, MAPLE automatically performs a <a href="tasks/singlepoint.html">single point</a> energy calculation (sp) using the default settings.</li>
-                    </ul>
-                    <h3>Solvent - #solv</h3>
-                    <p>#solv is used in MAPLE to activate solvent treatment. This directive enables either implicit solvent modeling or the construction of explicit solvation environments. For detailed descriptions of available modes, parameters, and usage examples, please refer to the Solvent section.</p>
-                </section>
-
-                <section class="new-section">
-                    <h2>Part II - Coordinate</h2>
-                    <p>The coordinate section defines the molecular structures used in the calculation. After reading the settings block, the program treats all lines recognized as coordinate content (inline atomic coordinates, blank lines, a lone "&", or XYZ references) as part of the Molecules section.</p>
-                    <p>There are two ways to provide molecular structures:</p>
-                    
-                    <h3>Inline atomic coordinates</h3>
-                    <p>The x, y, and z values are Cartesian coordinates in angstroms. Each line must follow the format: element symbol followed by three coordinate values. Both decimal notation and scientific notation are supported. Any line that does not conform to this format is considered invalid.</p>
-                    <p>MAPLE supports multiple molecular structures in a single input file. The coordinate section is divided into groups based on blank lines or lines containing only "&". Each group corresponds to one structure.</p>
-                    <p class="code-example">Example:<br>C 0.000000 1.234567 -0.123456<br>H 1.234E-01 -2.3456E+00 0.000000</p>
-
-                    <h3>External XYZ file</h3>
-                    <p>Structures may also be imported via external XYZ files. The path may be absolute or relative, and environment variables are expanded automatically. Each XYZ line corresponds to a separate structure. Inline coordinates and XYZ references cannot appear within the same group; if both are needed, separate them into different groups using blank lines or "&".</p>
-                    <p class="code-example">Example: XYZ path/to/file.xyz</p>
-                </section>
-
-                <section class="new-section">
-                    <h2>Part III - Post-processing</h2>
-                    <p>The post-processing section appears after the coordinate block and is used to define geometric constraints and, for scan tasks, to specify scanning paths. After the coordinate section is parsed, any line beginning with C, B, A, D, or S is interpreted as a post-processing command. The section ends once a line no longer starts with one of these command letters.</p>
-                    <p>The C, B, A, and D commands (for fixing atoms, bonds, angles, and dihedrals) are described in detail in the Constraints chapter.</p>
-                    <p>The S command, which is only valid for a scan task, is explained in the Scan chapter.</p>
-                </section>
-
-                <section class="new-section">
-                    <h2>Reference Example of a Full Input File</h2>
-                    <p class="code-example">#model=ANI-1xnr<br>#ts(method=dimer)<br>#device=gpu0<br><br>C  0.8773307780  0.7831579390 -0.1629806432<br>H  0.6909163982  1.5540583811 -0.9219751886<br>O  0.5296065367  0.9762287325  1.1234790578<br>C  1.3488671845 -0.5563869274 -0.1923254310<br>H  0.7828987178 -0.2429788233  1.0663324170<br>H  1.0764966981 -1.2943318365 -0.9583627957<br>H  2.2951253096 -0.7293808119  0.3397718379<br><br>C 3</p>
-                </section>
-
-                <section class="new-section">
-                    <h2>Note</h2>
-                    <p>All energy values in MAPLE are expressed in <strong>Hartree</strong>, and all distances are expressed in <strong>Å</strong>.</p>
-                </section>
-            </div>
+        <div class="card">
+          <div class="card-tag">ANI Family</div>
+          <h3>ANI-1x</h3>
+          <p>Neural network potential for organic molecules containing H, C, N, and O. Trained on the ANI-1x data set.</p>
         </div>
-    </main>
+        <div class="card">
+          <div class="card-tag">ANI Family</div>
+          <h3>ANI-1ccx</h3>
+          <p>Coupled-cluster accuracy neural network potential for H, C, N, O molecules. Transfer-learned from ANI-1x to CCSD(T)/CBS data.</p>
+        </div>
+        <div class="card">
+          <div class="card-tag">ANI Family</div>
+          <h3>ANI-1xnr</h3>
+          <p>Non-reactive variant of ANI-1x optimized for stable molecular geometries and vibrational properties.</p>
+        </div>
+        <div class="card">
+          <div class="card-tag">AIMNet</div>
+          <h3>AIMNet2</h3>
+          <p>Atoms-in-Molecules network potential with broad element coverage and high accuracy for organic and drug-like molecules.</p>
+        </div>
+        <div class="card">
+          <div class="card-tag">AIMNet</div>
+          <h3>AIMNet2-NSE</h3>
+          <p>AIMNet2 variant with non-stoichiometric energy corrections for improved thermochemical accuracy.</p>
+        </div>
+        <div class="card">
+          <div class="card-tag">MACE</div>
+          <h3>MACE-OFF23 (s/m/l)</h3>
+          <p>Equivariant message-passing potentials for organic molecules. Available in small, medium, and large variants balancing speed and accuracy.</p>
+        </div>
+        <div class="card">
+          <div class="card-tag">MACE</div>
+          <h3>MACE-OMol</h3>
+          <p>MACE potential trained on the OMol25 data set for broad organic molecular coverage with high accuracy.</p>
+        </div>
+        <div class="card">
+          <div class="card-tag">Equivariant</div>
+          <h3>EGRET</h3>
+          <p>Equivariant graph neural network potential designed for reactive and non-reactive molecular simulations.</p>
+        </div>
+        <div class="card">
+          <div class="card-tag">Universal</div>
+          <h3>UMA</h3>
+          <p>Universal Machine-learning Architecture from Meta. A foundation model covering broad chemical space with a single unified potential.</p>
+        </div>
+      </div>
 
-    <footer>
-        <p>&copy; 2025, MAPLE development team.</p>
-    </footer>
+      <h2 id="capabilities">Computational Capabilities</h2>
+      <p>MAPLE provides a comprehensive suite of computational chemistry methods, all driven by machine learning potentials for fast evaluation on GPU hardware.</p>
+
+      <h3 id="task-types">Supported Task Types</h3>
+      <ul>
+        <li><strong><a href="tasks/singlepoint.html">Single Point (sp)</a></strong> &mdash; Compute molecular energies and properties at fixed geometries.</li>
+        <li><strong>Frequency (freq)</strong> &mdash; Normal mode analysis, RRHO thermochemistry, and IR spectra via mass-weighted Hessian diagonalization.</li>
+        <li><strong><a href="tasks/opt/optimization.html">Optimization (opt)</a></strong> &mdash; Locate equilibrium geometries using L-BFGS, RFO, steepest descent, conjugate gradient, DIIS, or bracketing L-BFGS.</li>
+        <li><strong><a href="tasks/ts/ts.html">Transition State (ts)</a></strong> &mdash; Saddle point search via NEB, CI-NEB, P-RFO, Dimer, Growing String, or AutoNEB methods.</li>
+        <li><strong><a href="tasks/scan/scan.html">PES Scan (scan)</a></strong> &mdash; 1D to N-dimensional relaxed or rigid scans along chosen internal coordinates.</li>
+        <li><strong><a href="tasks/irc/irc.html">IRC (irc)</a></strong> &mdash; Intrinsic reaction coordinate with GS, LQA, HPC, and EulerPC integrators.</li>
+      </ul>
+
+      <h3 id="additional-features">Additional Features</h3>
+      <ul>
+        <li><strong><a href="functions/solvent.html">Solvation</a></strong> &mdash; GBSA implicit solvation and explicit solvent models with DFT-D4 dispersion corrections.</li>
+        <li><strong><a href="functions/constrain.html">Constraints</a></strong> &mdash; Fix atoms, bonds, angles, and dihedral angles during optimization and scanning.</li>
+        <li><strong>GPU Acceleration</strong> &mdash; Full CUDA support for ML potential evaluation, providing orders of magnitude speedup over traditional QM methods.</li>
+        <li><strong>D4 Dispersion</strong> &mdash; DFT-D4 dispersion correction available as a global option for any calculation.</li>
+      </ul>
+
+      <h2 id="convergence">Convergence Criteria</h2>
+      <p>MAPLE uses four convergence criteria for geometry optimization and transition state searches. Each criterion can be controlled independently or set via predefined convergence levels.</p>
+
+      <div class="table-wrapper">
+        <table>
+          <thead>
+            <tr>
+              <th>Level</th>
+              <th>f_max (Ha/Bohr)</th>
+              <th>f_rms (Ha/Bohr)</th>
+              <th>dp_max (Bohr)</th>
+              <th>dp_rms (Bohr)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>superloose</code></td>
+              <td>2.5e-01</td>
+              <td>1.7e-01</td>
+              <td>1.0e+00</td>
+              <td>6.7e-01</td>
+            </tr>
+            <tr>
+              <td><code>extraloose</code></td>
+              <td>2.5e-02</td>
+              <td>1.7e-02</td>
+              <td>1.0e-01</td>
+              <td>6.7e-02</td>
+            </tr>
+            <tr>
+              <td><code>loose</code></td>
+              <td>2.5e-03</td>
+              <td>1.7e-03</td>
+              <td>1.0e-02</td>
+              <td>6.7e-03</td>
+            </tr>
+            <tr>
+              <td><code>medium</code> (default)</td>
+              <td>4.5e-04</td>
+              <td>3.0e-04</td>
+              <td>1.8e-03</td>
+              <td>1.2e-03</td>
+            </tr>
+            <tr>
+              <td><code>tight</code></td>
+              <td>1.5e-05</td>
+              <td>1.0e-05</td>
+              <td>6.0e-05</td>
+              <td>4.0e-05</td>
+            </tr>
+            <tr>
+              <td><code>extratight</code></td>
+              <td>1.5e-06</td>
+              <td>1.0e-06</td>
+              <td>6.0e-06</td>
+              <td>4.0e-06</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 id="use-cases">Use Cases</h2>
+      <p>MAPLE is well-suited for a variety of computational chemistry workflows:</p>
+      <ul>
+        <li><strong>Conformational analysis</strong> &mdash; Rapid geometry optimization and PES scanning of drug-like molecules using ML potentials.</li>
+        <li><strong>Reaction mechanism exploration</strong> &mdash; Transition state search and IRC calculations to map complete reaction pathways.</li>
+        <li><strong>Thermochemistry</strong> &mdash; Frequency calculations with RRHO corrections for free energy and enthalpy estimates.</li>
+        <li><strong>High-throughput screening</strong> &mdash; GPU-accelerated single point calculations across large molecular libraries.</li>
+        <li><strong>Benchmarking ML potentials</strong> &mdash; Compare results from different ML models (ANI, MACE, AIMNet2, UMA) on the same molecular system using a unified interface.</li>
+      </ul>
+    </article>
+  </div>
+
+  <footer>
+    <p>&copy; 2026, MAPLE development team.</p>
+  </footer>
+  <script src="assets/js/main.js"></script>
 </body>
 </html>

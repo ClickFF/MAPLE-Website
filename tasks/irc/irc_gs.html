@@ -1,117 +1,238 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>IRC Method: GS - MAPLE</title>
-    <link rel="stylesheet" href="../../assets/css/styles.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>IRC: Gonzalez-Schlegel (GS) - MAPLE</title>
+  <link rel="stylesheet" href="../../assets/css/styles.css">
 </head>
 <body>
-    <header class="top-nav">
-        <div class="container">
-            <div class="brand">
-                <a href="../../index.html"><img src="../../assets/images/logo.jpg" alt="MAPLE Logo"></a>
-                <a href="../../index.html">MAPLE</a>
-            </div>
-            <nav>
-                <ul>
-                    <li><a href="../../index.html">Home</a></li>
-                    <li><a href="../../general.html">About MAPLE</a></li>
-                    <li><a href="../../documentation.html">User Guide</a></li>
-                    <li><a href="../../articles.html">Articles</a></li>
-                    <li><a href="../../downloads.html">Downloads</a></li>
-                    <li><a href="../../issues.html">Report an issue</a></li>
-                    <li><a href="../../development.html">Development</a></li>
-                </ul>
-            </nav>
+  <header class="top-nav">
+    <div class="container">
+      <div class="brand">
+        <a href="../../index.html"><img src="../../assets/images/logo.jpg" alt="MAPLE Logo"></a>
+        <a href="../../index.html">MAPLE</a>
+      </div>
+      <button class="mobile-toggle" aria-label="Toggle menu">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+      </button>
+      <nav>
+        <ul>
+          <li><a href="../../index.html">Home</a></li>
+          <li><a href="../../general.html">About</a></li>
+          <li><a href="../../documentation.html">Documentation</a></li>
+          <li><a href="../../articles.html">Articles</a></li>
+          <li><a href="../../downloads.html">Downloads</a></li>
+          <li><a href="../../development.html">Development</a></li>
+          <li><a href="../../issues.html">Report Issue</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <div class="page-layout">
+    <aside class="sidebar">
+      <nav class="sidebar-nav">
+        <div class="sidebar-brand">
+          <img src="../../assets/images/logo.jpg" alt="MAPLE">
+          <span>MAPLE Docs</span>
         </div>
-    </header>
-
-    <main>
-        <div class="content-wrapper">
-            <aside class="navigation-section">
-                <a href="../../index.html"><img src="../../assets/images/logo.jpg" alt="MAPLE Logo" style="width: 80px; height: 80px; object-fit: contain; display: block; margin-bottom: 1.5rem; cursor: pointer; background: transparent; border: none;"></a>
-                <div class="doc-tree">
-                    <ul>
-                        <li class="open">
-                            <span class="toggle">Getting Started</span>
-                            <ul class="children">
-                                <li><a href="../../documentation.html#installation">Installation Guide</a></li>
-                                <li class="open">
-                                    <span class="toggle">Quick Start Tutorial</span>
-                                    <ul class="children">
-                                        <li class="open">
-                                            <a href="irc.html">IRC</a>
-                                            <ul class="children" style="display:block;">
-                                                <li><a href="irc_gs.html" class="active">GS</a></li>
-                                                <li><a href="irc_lqa.html">LQA</a></li>
-                                                <li><a href="irc_hpc.html">HPC</a></li>
-                                                <li><a href="irc_eulerpc.html">EulerPC</a></li>
-                                            </ul>
-                                        </li>
-                                    </ul>
-                                </li>
-                            </ul>
-                        </li>
-                    </ul>
-                </div>
-            </aside>
-
-            <div class="main-content">
-                <section class="welcome-section">
-                    <h1>IRC Method: GS</h1>
-                </section>
-
-                <section class="new-section">
-                    <p>The GS (Gradient Stepping) method is the default integrator for intrinsic reaction coordinate (IRC) calculations. It follows the transition state geometry downhill along the unique imaginary vibrational mode and refines the trajectory using perpendicular force correction and adaptive step-size control. This method is suitable for verifying whether the transition state correctly connects reactants and products, and for analyzing the reaction pathway's structural and energetic evolution.</p>
-                </section>
-
-                <section class="new-section">
-                    <h2>I. Default Parameters</h2>
-                    <pre><code>#irc(method=gs,
-    target_mode=1,
-    init_delta_E_mEh=2.0,
-    use_quadratic_init=true,
-    sd_len_bohr=0.150,
-    sd_len_min_bohr=0.050,
-    sd_len_max_bohr=0.300,
-    corr_scale=0.333,
-    grow=1.20,
-    shrink=0.80,
-    do_parabolic_fit=true,
-    tol_maxf=0.002,
-    tol_rmsf=0.000500,
-    max_points=100,
-    print_each=true,
-    write_traj=true)</code></pre>
-                </section>
-
-                <section class="new-section">
-                    <h2>II. Adjustable Parameters</h2>
-                    <h3>target_mode</h3>
-                    <p>Selects the imaginary vibrational mode used to initiate the IRC (1 = most negative eigenvalue).</p>
-
-                    <h3>init_delta_E_mEh</h3>
-                    <p>Energy target for determining the magnitude of the initial displacement along the imaginary mode.</p>
-
-                    <h3>use_quadratic_init</h3>
-                    <p>Enables curvature-based initialization using Hessian information</p>
-                    <ul>
-                        <li><strong>= true (default)</strong></li>
-                        <li><strong>= false</strong></li>
-                    </ul>
-                </section>
-
-                <nav class="article-nav" style="display:flex; justify-content:space-between; margin-top:2rem;">
-                    <a href="irc.html">&larr; Back: IRC</a>
-                    <a href="irc_lqa.html">Next: LQA &rarr;</a>
-                </nav>
-            </div>
+        <div class="sidebar-tree">
+          <ul>
+            <li>
+              <span class="tree-section"><span class="chevron"></span> Getting Started</span>
+              <ul class="children">
+                <li><a href="../../tutorials/installation.html">Installation</a></li>
+                <li><a href="../../tutorials/quickstart.html">Quick Start</a></li>
+                <li><a href="../../tutorials/input_output.html">Input &amp; Output</a></li>
+              </ul>
+            </li>
+            <li>
+              <span class="tree-section"><span class="chevron"></span> Input Setup</span>
+              <ul class="children">
+                <li><a href="../../setup/settings.html">Settings</a></li>
+                <li><a href="../../setup/coordinates.html">Coordinates</a></li>
+                <li><a href="../../setup/models.html">ML Models</a></li>
+              </ul>
+            </li>
+            <li class="open">
+              <span class="tree-section"><span class="chevron"></span> Tasks</span>
+              <ul class="children">
+                <li><a href="../../tasks/singlepoint.html">Single Point</a></li>
+                <li><a href="../../tasks/frequency.html">Frequency</a></li>
+                <li>
+                  <span class="tree-label"><span class="chevron"></span> <a href="../opt/optimization.html">Optimization</a></span>
+                  <ul class="children">
+                    <li><a href="../opt/opt_lbfgs.html">L-BFGS</a></li>
+                    <li><a href="../opt/opt_rfo.html">RFO</a></li>
+                    <li><a href="../opt/opt_sd.html">SD</a></li>
+                  </ul>
+                </li>
+                <li>
+                  <span class="tree-label"><span class="chevron"></span> <a href="../ts/ts.html">Transition State</a></span>
+                  <ul class="children">
+                    <li><a href="../ts/ts_prfo.html">P-RFO</a></li>
+                    <li><a href="../ts/ts_neb.html">NEB</a></li>
+                    <li><a href="../ts/ts_dimmer.html">Dimer</a></li>
+                    <li><a href="../ts/ts_string.html">String/GSM</a></li>
+                    <li><a href="../ts/ts_autoneb.html">AutoNEB</a></li>
+                  </ul>
+                </li>
+                <li>
+                  <span class="tree-label"><span class="chevron"></span> <a href="../scan/scan.html">PES Scan</a></span>
+                  <ul class="children">
+                    <li><a href="../scan/scan_lbfgs.html">L-BFGS</a></li>
+                    <li><a href="../scan/scan_rfo.html">RFO</a></li>
+                  </ul>
+                </li>
+                <li class="open">
+                  <span class="tree-label"><span class="chevron"></span> <a href="irc.html">IRC</a></span>
+                  <ul class="children">
+                    <li><a href="irc_gs.html" class="active">GS</a></li>
+                    <li><a href="irc_lqa.html">LQA</a></li>
+                    <li><a href="irc_hpc.html">HPC</a></li>
+                    <li><a href="irc_eulerpc.html">EulerPC</a></li>
+                  </ul>
+                </li>
+              </ul>
+            </li>
+            <li>
+              <span class="tree-section"><span class="chevron"></span> Functions</span>
+              <ul class="children">
+                <li><a href="../../functions/solvent.html">Solvation</a></li>
+                <li><a href="../../functions/constrain.html">Constraints</a></li>
+              </ul>
+            </li>
+          </ul>
         </div>
+      </nav>
+    </aside>
+
+    <main class="content">
+      <nav class="breadcrumb" aria-label="Breadcrumb">
+        <ol>
+          <li><a href="../../index.html">Home</a></li>
+          <li><a href="../../documentation.html">Docs</a></li>
+          <li><a href="../../documentation.html">Tasks</a></li>
+          <li><a href="irc.html">IRC</a></li>
+          <li aria-current="page">GS</li>
+        </ol>
+      </nav>
+
+      <article>
+        <h1>IRC: Gonzalez&ndash;Schlegel (GS) Method</h1>
+
+        <h2 id="overview">Overview</h2>
+        <p>The Gonzalez&ndash;Schlegel (GS) method is the default IRC integrator in MAPLE. It operates in mass-weighted Cartesian coordinates and uses a two-phase pivot-step plus constrained-optimization approach at each IRC point:</p>
+        <ol>
+          <li><strong>Pivot step</strong> &mdash; A steepest-descent step is taken along the negative gradient direction in mass-weighted coordinates to produce a trial point on a hypersphere centered at the current IRC point.</li>
+          <li><strong>Constrained optimization</strong> &mdash; The trial point is refined by minimizing the energy on the surface of the hypersphere, using the perpendicular component of the gradient, until the corrector converges.</li>
+        </ol>
+        <p>The Hessian is updated along the path using BFGS/Bofill update formulas, avoiding full Hessian recomputation at every step. Adaptive step-size control adjusts the arc length based on path curvature, and an optional parabolic fit detects when the path has descended into a minimum basin.</p>
+        <p>The GS method integrates both the forward and backward IRC paths, starting from the transition state.</p>
+
+        <h2 id="parameters">Parameters</h2>
+        <p>All GS parameters can be specified in the <code>#irc(...)</code> header line. The complete <code>GSParams</code> dataclass:</p>
+        <div class="table-wrapper">
+        <table>
+          <thead>
+            <tr>
+              <th>Parameter</th>
+              <th>Type</th>
+              <th>Default</th>
+              <th>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>target_mode</code></td>
+              <td>int</td>
+              <td>1</td>
+              <td>Index of the imaginary vibrational mode to follow (1-based).</td>
+            </tr>
+            <tr>
+              <td><code>step_length_bohr</code></td>
+              <td>float</td>
+              <td>0.10</td>
+              <td>Step length along the IRC path in Bohr.</td>
+            </tr>
+            <tr>
+              <td><code>max_steps</code></td>
+              <td>int</td>
+              <td>50</td>
+              <td>Maximum number of IRC steps in each direction.</td>
+            </tr>
+            <tr>
+              <td><code>max_micro_cycles</code></td>
+              <td>int</td>
+              <td>20</td>
+              <td>Maximum micro-iterations per IRC macro-step (constrained optimization on hypersphere).</td>
+            </tr>
+            <tr>
+              <td><code>micro_step_thresh</code></td>
+              <td>float</td>
+              <td>1e-3</td>
+              <td>Convergence threshold for micro-iterations.</td>
+            </tr>
+            <tr>
+              <td><code>hessian_recalc</code></td>
+              <td>int</td>
+              <td>None</td>
+              <td>Recalculate the full Hessian every N steps. None means never recalculate.</td>
+            </tr>
+            <tr>
+              <td><code>hessian_update</code></td>
+              <td>str</td>
+              <td><code>"bofill"</code></td>
+              <td>Hessian update method: <code>"bfgs"</code> or <code>"bofill"</code>.</td>
+            </tr>
+            <tr>
+              <td><code>f_max_th</code></td>
+              <td>float</td>
+              <td>2e-3</td>
+              <td>Max force convergence threshold (Hartree/Bohr).</td>
+            </tr>
+            <tr>
+              <td><code>f_rms_th</code></td>
+              <td>float</td>
+              <td>5e-4</td>
+              <td>RMS force convergence threshold.</td>
+            </tr>
+            <tr>
+              <td><code>print_each</code></td>
+              <td>bool</td>
+              <td>True</td>
+              <td>Print step details for each IRC point.</td>
+            </tr>
+            <tr>
+              <td><code>write_traj</code></td>
+              <td>bool</td>
+              <td>True</td>
+              <td>Write trajectory XYZ files.</td>
+            </tr>
+          </tbody>
+        </table>
+        </div>
+
+        <h2 id="input-example">Input Example</h2>
+        <p>Basic GS IRC calculation with default parameters:</p>
+        <pre><code>#model=ani1xnr
+#irc(method=gs)
+#device=gpu0
+
+XYZ /path/to/transition_state.xyz</code></pre>
+
+        <nav class="page-nav">
+          <a href="irc.html">&larr; Previous: IRC</a>
+          <a href="irc_lqa.html">Next: LQA &rarr;</a>
+        </nav>
+      </article>
     </main>
 
-    <footer>
-        <p>&copy; 2025, MAPLE development team.</p>
-    </footer>
+    <aside class="toc"><div class="toc-sticky"><h3>On this page</h3><ul></ul></div></aside>
+  </div>
+  <div class="sidebar-overlay"></div>
+  <footer><p>&copy; 2026, MAPLE development team.</p></footer>
+  <script src="../../assets/js/main.js"></script>
 </body>
 </html>

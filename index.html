@@ -1,81 +1,137 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Welcome to MaLePSO</title>
-    <link rel="stylesheet" href="assets/css/styles.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MAPLE — Machine-learning Potential for Landscape Exploration</title>
+  <link rel="stylesheet" href="assets/css/styles.css">
 </head>
 <body>
-    <header class="top-nav">
-        <div class="container">
-            <div class="brand">
-                <a href="index.html"><img src="assets/images/logo.jpg" alt="MAPLE Logo"></a>
-                <a href="index.html">MAPLE</a>
-            </div>
-            <nav>
-                <ul>
-                    <li><a href="index.html">Home</a></li>
-                    <li><a href="general.html">About MAPLE</a></li>
-                    <li><a href="documentation.html">User Guide</a></li>
-                    <li><a href="articles.html">Articles</a></li>
-                    <li><a href="downloads.html">Downloads</a></li>
-                    <li><a href="issues.html">Report an issue</a></li>
-                    <li><a href="development.html">Development</a></li>
-                </ul>
-            </nav>
+  <header class="top-nav">
+    <div class="container">
+      <div class="brand">
+        <a href="index.html"><img src="assets/images/logo.jpg" alt="MAPLE Logo"></a>
+        <a href="index.html">MAPLE</a>
+      </div>
+      <button class="mobile-toggle" aria-label="Toggle menu">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+      </button>
+      <nav>
+        <ul>
+          <li><a href="index.html" class="active">Home</a></li>
+          <li><a href="general.html">About</a></li>
+          <li><a href="documentation.html">Documentation</a></li>
+          <li><a href="articles.html">Articles</a></li>
+          <li><a href="downloads.html">Downloads</a></li>
+          <li><a href="development.html">Development</a></li>
+          <li><a href="issues.html">Report Issue</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <div class="page-body">
+    <section class="hero">
+      <h1>MAPLE</h1>
+      <p class="lead">Machine-learning Potential for Landscape Exploration — a fast, GPU-accelerated computational chemistry toolkit powered by machine learning potentials.</p>
+      <div class="hero-actions">
+        <a href="tutorials/quickstart.html" class="btn btn-primary">Get Started</a>
+        <a href="documentation.html" class="btn btn-secondary">Documentation</a>
+        <a href="downloads.html" class="btn btn-secondary">Download</a>
+      </div>
+    </section>
+
+    <div class="landing-grid">
+      <div>
+        <div class="section-header">
+          <h2>Features</h2>
+          <p>Comprehensive computational chemistry with ML potentials</p>
         </div>
-    </header>
-    <main>
-        <div class="content-wrapper">
 
-            <div class="main-content">
-                <section class="welcome-section">
-                    <h1>Welcome to MAPLE</h1>
-                    <p class="tagline">A computational chemistry software package designed for molecular modeling and quantum chemical calculations.</p>
-                </section>
-
-                <section class="new-section">
-                    <h2>New to MAPLE:</h2>
-                    <ul>
-                        <li>Start with the general page about MaLePSO.</li>
-                        <li>Have a look at documentation page to know more how to install and use MaLePSO.</li>
-                        <li>Try the introduction tutorial.</li>
-                    </ul>
-                </section>
-            </div>
-
-            <aside class="news-section">
-                <h2>News</h2>
-                <div class="news-slider">
-                    <div class="news-slide active">
-                        <img src="assets/images/image.png" alt="MAPLE 2025.3 is available - 12 September 2025">
-                        <div class="news-caption">MAPLE 2025.3 is available - 12 September 2025</div>
-                    </div>
-                    <div class="news-slide">
-                        <img src="news2.jpg" alt="MAPLE 2025.2 is available - 3 June 2025">
-                        <div class="news-caption">MAPLE 2025.2 is available - 3 June 2025</div>
-                    </div>
-                </div>
-            </aside>
+        <div class="features">
+          <div class="feature-card">
+            <div class="icon">&#9889;</div>
+            <h3>ML Potentials</h3>
+            <p>Support for ANI, AIMNet2, MACE-OFF, UMA, and more. Near-DFT accuracy at a fraction of the cost.</p>
+          </div>
+          <div class="feature-card">
+            <div class="icon">&#128200;</div>
+            <h3>Geometry Optimization</h3>
+            <p>L-BFGS, RFO, steepest descent, conjugate gradient, DIIS, and bracketing L-BFGS methods.</p>
+          </div>
+          <div class="feature-card">
+            <div class="icon">&#9962;</div>
+            <h3>Transition States</h3>
+            <p>NEB, CI-NEB, P-RFO, Dimer, Growing String, AutoNEB methods for saddle point search.</p>
+          </div>
+          <div class="feature-card">
+            <div class="icon">&#128260;</div>
+            <h3>Reaction Paths</h3>
+            <p>IRC with GS, LQA, HPC, and EulerPC integrators. Verify TS connectivity to reactants and products.</p>
+          </div>
+          <div class="feature-card">
+            <div class="icon">&#127884;</div>
+            <h3>Vibrational Analysis</h3>
+            <p>Normal mode analysis, RRHO thermochemistry, IR spectra. Mass-weighted Hessian diagonalization.</p>
+          </div>
+          <div class="feature-card">
+            <div class="icon">&#128202;</div>
+            <h3>PES Scanning</h3>
+            <p>1D to N-dimensional relaxed or rigid scans. Map energy landscapes along chosen coordinates.</p>
+          </div>
+          <div class="feature-card">
+            <div class="icon">&#127754;</div>
+            <h3>Solvation</h3>
+            <p>GBSA implicit solvation and explicit solvent models. DFT-D4 dispersion corrections.</p>
+          </div>
+          <div class="feature-card">
+            <div class="icon">&#128640;</div>
+            <h3>GPU Accelerated</h3>
+            <p>CUDA support for ML potential evaluation. Orders of magnitude faster than traditional QM.</p>
+          </div>
         </div>
-    </main>
 
-    <footer>
-        <p>&copy; 2025, MAPLE development team.</p>
-    </footer>
+        <div class="section-header mt-3">
+          <h2>Quick Example</h2>
+          <p>A simple geometry optimization with MAPLE</p>
+        </div>
+        <pre><code><span class="comment"># Optimize ethanol with the UMA potential</span>
+<span class="keyword">#model</span>=<span class="value">uma</span>
+<span class="keyword">#opt</span>(<span class="param">method</span>=<span class="value">lbfgs</span>)
+<span class="keyword">#device</span>=<span class="value">gpu0</span>
 
-    <script>
-        const slides = document.querySelectorAll('.news-slide');
-        let currentSlide = 0;
+C   -0.748   0.014   0.025
+C    0.748  -0.014  -0.025
+O    1.170   0.016   1.330
+H   -1.155  -0.888  -0.460
+H   -1.096   0.888  -0.530
+H   -1.155   0.049   1.065
+H    1.148  -0.912   0.457
+H    1.096   0.869   0.513
+H    0.802   0.842   1.742</code></pre>
+      </div>
 
-        function rotateSlides() {
-            slides[currentSlide].classList.remove('active');
-            currentSlide = (currentSlide + 1) % slides.length;
-            slides[currentSlide].classList.add('active');
-        }
+      <aside class="news-sidebar">
+        <h2>News</h2>
+        <div class="news-item">
+          <div class="date">September 12, 2025</div>
+          <p>MAPLE 2025.3 released with AutoNEB support and improved convergence.</p>
+        </div>
+        <div class="news-item">
+          <div class="date">June 3, 2025</div>
+          <p>MAPLE 2025.2 released with MACE-OMol and EGRET model support.</p>
+        </div>
+        <div class="news-item">
+          <div class="date">March 15, 2025</div>
+          <p>MAPLE 2025.1 released with frequency analysis and MD capabilities.</p>
+        </div>
+      </aside>
+    </div>
+  </div>
 
-        setInterval(rotateSlides, 5000);
-    </script>
+  <footer>
+    <p>&copy; 2026, MAPLE development team.</p>
+  </footer>
+  <script src="assets/js/main.js"></script>
 </body>
 </html>

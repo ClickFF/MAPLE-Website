@@ -1,111 +1,207 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Intrinsic Reaction Coordinate (IRC) - MAPLE</title>
-    <link rel="stylesheet" href="../../assets/css/styles.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Intrinsic Reaction Coordinate (IRC) - MAPLE</title>
+  <link rel="stylesheet" href="../../assets/css/styles.css">
 </head>
 <body>
-    <header class="top-nav">
-        <div class="container">
-            <div class="brand">
-                <a href="../../index.html"><img src="../../assets/images/logo.jpg" alt="MAPLE Logo"></a>
-                <a href="../../index.html">MAPLE</a>
-            </div>
-            <nav>
-                <ul>
-                    <li><a href="../../index.html">Home</a></li>
-                    <li><a href="../../general.html">About MAPLE</a></li>
-                    <li><a href="../../documentation.html">User Guide</a></li>
-                    <li><a href="../../articles.html">Articles</a></li>
-                    <li><a href="../../downloads.html">Downloads</a></li>
-                    <li><a href="../../issues.html">Report an issue</a></li>
-                    <li><a href="../../development.html">Development</a></li>
-                </ul>
-            </nav>
+  <header class="top-nav">
+    <div class="container">
+      <div class="brand">
+        <a href="../../index.html"><img src="../../assets/images/logo.jpg" alt="MAPLE Logo"></a>
+        <a href="../../index.html">MAPLE</a>
+      </div>
+      <button class="mobile-toggle" aria-label="Toggle menu">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+      </button>
+      <nav>
+        <ul>
+          <li><a href="../../index.html">Home</a></li>
+          <li><a href="../../general.html">About</a></li>
+          <li><a href="../../documentation.html">Documentation</a></li>
+          <li><a href="../../articles.html">Articles</a></li>
+          <li><a href="../../downloads.html">Downloads</a></li>
+          <li><a href="../../development.html">Development</a></li>
+          <li><a href="../../issues.html">Report Issue</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <div class="page-layout">
+    <aside class="sidebar">
+      <nav class="sidebar-nav">
+        <div class="sidebar-brand">
+          <img src="../../assets/images/logo.jpg" alt="MAPLE">
+          <span>MAPLE Docs</span>
         </div>
-    </header>
-
-    <main>
-        <div class="content-wrapper">
-            <aside class="navigation-section">
-                <a href="../../index.html"><img src="../../assets/images/logo.jpg" alt="MAPLE Logo" style="width: 80px; height: 80px; object-fit: contain; display: block; margin-bottom: 1.5rem; cursor: pointer; background: transparent; border: none;"></a>
-                <div class="doc-tree">
-                    <ul>
-                        <li class="open">
-                            <span class="toggle">Getting Started</span>
-                            <ul class="children">
-                                <li><a href="../../documentation.html#installation">Installation Guide</a></li>
-                                <li class="open">
-                                    <span class="toggle">Quick Start Tutorial</span>
-                                    <ul class="children">
-                                        <li class="open">
-                                            <a href="irc.html" class="active">IRC</a>
-                                            <ul class="children" style="display:block;">
-                                                <li><a href="irc_gs.html">GS</a></li>
-                                                <li><a href="irc_lqa.html">LQA</a></li>
-                                                <li><a href="irc_hpc.html">HPC</a></li>
-                                                <li><a href="irc_eulerpc.html">EulerPC</a></li>
-                                            </ul>
-                                        </li>
-                                    </ul>
-                                </li>
-                            </ul>
-                        </li>
-                    </ul>
-                </div>
-            </aside>
-
-            <div class="main-content">
-                <section class="welcome-section">
-                    <h1>Module: Intrinsic Reaction Coordinate (irc)</h1>
-                </section>
-
-                <section class="new-section">
-                    <p>The IRC module computes the intrinsic reaction path starting from a transition-state (TS) geometry by following the steepest-descent direction defined by the TS's unique imaginary vibrational mode. This mode corresponds to the negative eigenvalue of the mass-weighted Hessian and provides the correct reaction coordinate. The module currently supports one algorithm: the <span style="color: #ff0000;"><a href="irc_gs.html">gs</a></span> (Gradient Stepping) method.</p>
-                </section>
-
-                <section class="new-section">
-                    <h2>I. Input Parameters</h2>
-                    <p>The IRC task is invoked with:</p>
-                    <p><code>#irc(method=gs)</code></p>
-                    <p>The above represents the default settings. Adjustable parameters include:</p>
-                    <h3>method</h3>
-                    <p>IRC integration algorithm</p>
-                    <p>= <strong style="color: #ff0000;">gs</strong> (default)</p>
-                </section>
-
-                <section class="new-section">
-                    <h2>II. Output File Contents</h2>
-                    <p>Two categories of information are printed:</p>
-                    <ul>
-                        <li><strong>Negative Mode Selection</strong></li>
-                    </ul>
-                    <p>Reports the unique imaginary vibrational mode that defines the reaction coordinate. This mode comes from the negative eigenvalue of the mass-weighted Hessian at the transition state.</p>
-                    <p>Example:</p>
-                    <p><code>Selected eigenmode #1 (λ = -8.019604e-03 in MW basis)</code></p>
-                    <ul>
-                        <li><strong>IRC Path Iterations</strong></li>
-                    </ul>
-                    <p>Lists the step-by-step evolution along the IRC path, including: the energy E(Eh), the relative energy change dE(kcal/mol), the maximum force max(|G|), and the root-mean-square force RMS(G). Convergence thresholds for max(|G|) and RMS(G) are also shown; meeting both indicates arrival at a minimum along that direction.</p>
-                    <p>Example:</p>
-                    <p><code>Iteration   E(Eh)      dE(kcal/mol)  max(|G|)   RMS(G)</code></p>
-                    <p><code>Convergence thresholds                0.002000  0.000500</code></p>
-                    <p><code>  0    -382.552193      0.00        0.003218   0.001205</code></p>
-                    <p><code>  1    -382.557801     -3.52        0.002145   0.000734</code></p>
-                </section>
-
-                <nav class="article-nav" style="display:flex; justify-content:space-between; margin-top:2rem;">
-                    <a href="../../documentation.html">&larr; Back to User Guide</a>
-                    <a href="irc_gs.html">Next: GS &rarr;</a>
-                </nav>
-            </div>
+        <div class="sidebar-tree">
+          <ul>
+            <li>
+              <span class="tree-section"><span class="chevron"></span> Getting Started</span>
+              <ul class="children">
+                <li><a href="../../tutorials/installation.html">Installation</a></li>
+                <li><a href="../../tutorials/quickstart.html">Quick Start</a></li>
+                <li><a href="../../tutorials/input_output.html">Input &amp; Output</a></li>
+              </ul>
+            </li>
+            <li>
+              <span class="tree-section"><span class="chevron"></span> Input Setup</span>
+              <ul class="children">
+                <li><a href="../../setup/settings.html">Settings</a></li>
+                <li><a href="../../setup/coordinates.html">Coordinates</a></li>
+                <li><a href="../../setup/models.html">ML Models</a></li>
+              </ul>
+            </li>
+            <li class="open">
+              <span class="tree-section"><span class="chevron"></span> Tasks</span>
+              <ul class="children">
+                <li><a href="../../tasks/singlepoint.html">Single Point</a></li>
+                <li><a href="../../tasks/frequency.html">Frequency</a></li>
+                <li>
+                  <span class="tree-label"><span class="chevron"></span> <a href="../opt/optimization.html">Optimization</a></span>
+                  <ul class="children">
+                    <li><a href="../opt/opt_lbfgs.html">L-BFGS</a></li>
+                    <li><a href="../opt/opt_rfo.html">RFO</a></li>
+                    <li><a href="../opt/opt_sd.html">SD</a></li>
+                  </ul>
+                </li>
+                <li>
+                  <span class="tree-label"><span class="chevron"></span> <a href="../ts/ts.html">Transition State</a></span>
+                  <ul class="children">
+                    <li><a href="../ts/ts_prfo.html">P-RFO</a></li>
+                    <li><a href="../ts/ts_neb.html">NEB</a></li>
+                    <li><a href="../ts/ts_dimmer.html">Dimer</a></li>
+                    <li><a href="../ts/ts_string.html">String/GSM</a></li>
+                    <li><a href="../ts/ts_autoneb.html">AutoNEB</a></li>
+                  </ul>
+                </li>
+                <li>
+                  <span class="tree-label"><span class="chevron"></span> <a href="../scan/scan.html">PES Scan</a></span>
+                  <ul class="children">
+                    <li><a href="../scan/scan_lbfgs.html">L-BFGS</a></li>
+                    <li><a href="../scan/scan_rfo.html">RFO</a></li>
+                  </ul>
+                </li>
+                <li class="open">
+                  <span class="tree-label"><span class="chevron"></span> <a href="irc.html" class="active">IRC</a></span>
+                  <ul class="children">
+                    <li><a href="irc_gs.html">GS</a></li>
+                    <li><a href="irc_lqa.html">LQA</a></li>
+                    <li><a href="irc_hpc.html">HPC</a></li>
+                    <li><a href="irc_eulerpc.html">EulerPC</a></li>
+                  </ul>
+                </li>
+              </ul>
+            </li>
+            <li>
+              <span class="tree-section"><span class="chevron"></span> Functions</span>
+              <ul class="children">
+                <li><a href="../../functions/solvent.html">Solvation</a></li>
+                <li><a href="../../functions/constrain.html">Constraints</a></li>
+              </ul>
+            </li>
+          </ul>
         </div>
+      </nav>
+    </aside>
+
+    <main class="content">
+      <nav class="breadcrumb" aria-label="Breadcrumb">
+        <ol>
+          <li><a href="../../index.html">Home</a></li>
+          <li><a href="../../documentation.html">Docs</a></li>
+          <li><a href="../../documentation.html">Tasks</a></li>
+          <li aria-current="page">IRC</li>
+        </ol>
+      </nav>
+
+      <article>
+        <h1>Intrinsic Reaction Coordinate (IRC)</h1>
+
+        <h2 id="overview">Overview</h2>
+        <p>The Intrinsic Reaction Coordinate (IRC) module follows the minimum energy path (MEP) from a transition state (TS) geometry downhill toward both the reactant and product minima. The IRC path is defined as the mass-weighted steepest descent path originating from the TS saddle point, and it provides definitive verification that a given transition state connects the expected reactant and product structures.</p>
+        <p>Starting from the TS, the IRC integrator displaces the geometry along the unique imaginary vibrational mode (the eigenvector corresponding to the single negative eigenvalue of the mass-weighted Hessian) and then follows the gradient downhill in both the forward and backward directions until local minima are reached or the maximum number of path points is exceeded.</p>
+
+        <h2 id="available-methods">Available Methods</h2>
+        <p>MAPLE supports four IRC integration algorithms:</p>
+        <table>
+          <thead>
+            <tr>
+              <th>Method</th>
+              <th>Full Name</th>
+              <th>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong><a href="irc_gs.html">GS</a></strong></td>
+              <td>Gonzalez&ndash;Schlegel</td>
+              <td>Default method. Mass-weighted coordinates with pivot-step and constrained optimization on a hypersphere. Robust and well-tested.</td>
+            </tr>
+            <tr>
+              <td><strong><a href="irc_lqa.html">LQA</a></strong></td>
+              <td>Local Quadratic Approximation</td>
+              <td>Fits a local quadratic surface to the PES at each point. Can be faster than GS on smooth surfaces.</td>
+            </tr>
+            <tr>
+              <td><strong><a href="irc_hpc.html">HPC</a></strong></td>
+              <td>Hessian Predictor&ndash;Corrector</td>
+              <td>Uses Hessian information for both predictor and corrector steps. Good balance of speed and accuracy.</td>
+            </tr>
+            <tr>
+              <td><strong><a href="irc_eulerpc.html">EulerPC</a></strong></td>
+              <td>Euler Predictor&ndash;Corrector</td>
+              <td>Simplest predictor-corrector approach using Euler integration. Most robust for difficult or highly anharmonic surfaces.</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <h2 id="general-usage">General Usage</h2>
+        <p>The IRC task is invoked with the <code>#irc</code> keyword, specifying the desired method:</p>
+        <pre><code>#model=ani1xnr
+#irc(method=gs)
+#device=gpu0
+
+XYZ /path/to/transition_state.xyz</code></pre>
+        <p>The input geometry <strong>must</strong> be a valid transition-state structure with exactly one imaginary vibrational frequency. The IRC module reads this geometry, identifies the imaginary mode from the Hessian, and integrates the reaction path in both directions.</p>
+
+        <div class="admonition important">
+          <p class="admonition-title">Important</p>
+          <p>The input structure must be a converged transition state with exactly one imaginary frequency. Running IRC on a geometry that is not a true first-order saddle point will produce unreliable results. Always verify the TS with a frequency calculation before running IRC.</p>
+        </div>
+
+        <h2 id="output-files">Output Files</h2>
+        <p>The IRC module produces the following output files:</p>
+        <ul>
+          <li><strong><code>*_forward.xyz</code></strong> &mdash; Multi-frame XYZ trajectory of the forward IRC path (from TS toward one minimum).</li>
+          <li><strong><code>*_backward.xyz</code></strong> &mdash; Multi-frame XYZ trajectory of the backward IRC path (from TS toward the other minimum).</li>
+          <li><strong><code>*_full.xyz</code></strong> &mdash; Combined trajectory containing both forward and backward paths, with the TS at the center.</li>
+          <li><strong><code>*.out</code></strong> &mdash; Main text output with step-by-step energy, gradient, and convergence information.</li>
+        </ul>
+
+        <h2 id="workflow">Workflow</h2>
+        <p>The recommended workflow for verifying a transition state using IRC is:</p>
+        <ol>
+          <li><strong>TS Search</strong> &mdash; Locate the transition state using one of the TS methods (P-RFO, NEB, Dimer, String/GSM).</li>
+          <li><strong>Frequency Check</strong> &mdash; Run a frequency calculation on the optimized TS. Confirm that there is exactly one imaginary frequency and that its vibrational mode corresponds to the expected reaction coordinate.</li>
+          <li><strong>IRC Calculation</strong> &mdash; Run IRC from the verified TS geometry.</li>
+          <li><strong>Verify Endpoints</strong> &mdash; Inspect the forward and backward IRC endpoints to confirm they correspond to the expected reactant and product structures.</li>
+        </ol>
+
+        <nav class="page-nav">
+          <a href="../scan/scan_rfo.html">&larr; Previous: Scan RFO</a>
+          <a href="irc_gs.html">Next: GS &rarr;</a>
+        </nav>
+      </article>
     </main>
 
-    <footer>
-        <p>&copy; 2025, MAPLE development team.</p>
-    </footer>
+    <aside class="toc"><div class="toc-sticky"><h3>On this page</h3><ul></ul></div></aside>
+  </div>
+  <div class="sidebar-overlay"></div>
+  <footer><p>&copy; 2026, MAPLE development team.</p></footer>
+  <script src="../../assets/js/main.js"></script>
 </body>
 </html>
