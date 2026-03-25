@@ -140,8 +140,27 @@ def parse_maple_out(path):
 
 
 def _method_from_path(path):
+    # Try to read method from file content.
+    # Match lines like:  #opt(method=lbfgs)  or  method : lbfgs
+    # but NOT  lbfgs : True  (flag lines where the value is a boolean)
+    _KNOWN = {"lbfgs", "rfo", "sdcg", "sd", "cg"}
+    try:
+        with open(path) as f:
+            for line in f:
+                m = re.search(r"method\s*[:=]\s*(\w+)", line, re.IGNORECASE)
+                if m:
+                    candidate = m.group(1).lower()
+                    if candidate in _KNOWN:
+                        return candidate
+                # Also catch bare keyword lines like  "lbfgs          : True"
+                m2 = re.match(r"\s*(\w+)\s*:\s*True\b", line, re.IGNORECASE)
+                if m2 and m2.group(1).lower() in _KNOWN:
+                    return m2.group(1).lower()
+    except Exception:
+        pass
+    # Fall back to filename (order matters: sdcg before sd/cg)
     name = os.path.basename(path).lower()
-    for m in ("lbfgs", "rfo", "sd"):
+    for m in ("lbfgs", "rfo", "sdcg", "sd", "cg"):
         if m in name:
             return m
     return "opt"
@@ -159,13 +178,13 @@ def _savefig(fig, outdir, fname):
 
 
 def fig_energy_vs_iter(data, method="lbfgs", label=None, outdir=HERE):
-    """Energy relative to final value (mEh) vs iteration."""
+    """Energy relative to minimum value (mEh) vs iteration."""
     iters  = data["iters"]
     E      = data["energy"]
-    E_rel  = (E - E[-1]) * 1000   # mEh
+    E_rel  = (E - E.min()) * 1000   # mEh, always >= 0 at the global minimum
     color  = COLOR.get(method, COLOR["lbfgs"])
     label  = label or method.upper()
-    every  = max(1, len(iters) // 10)
+    every  = 1 if len(iters) <= 30 else max(1, len(iters) // 20)
 
     fig, ax = plt.subplots(figsize=(FIG_W, FIG_H))
     ax.plot(iters, E_rel, color=color, lw=LINEWIDTH,
@@ -176,7 +195,7 @@ def fig_energy_vs_iter(data, method="lbfgs", label=None, outdir=HERE):
     ax.yaxis.set_major_formatter(ticker.FormatStrFormatter("%.2f"))
     ax.legend(loc="upper right")
     ax.set_xlim(left=1)
-    ax.set_ylim(bottom=0)
+    # No bottom=0 clamp: non-monotonic methods (CG, SD) show true behaviour
 
     return _savefig(fig, outdir, f"energy_vs_iter_{method}.png")
 
@@ -186,7 +205,7 @@ def fig_force_vs_iter(data, method="lbfgs", label=None, outdir=HERE):
     iters  = data["iters"]
     maxf   = data["max_force"]
     rmsf   = data["rms_force"]
-    every  = max(1, len(iters) // 10)
+    every  = 1 if len(iters) <= 30 else max(1, len(iters) // 20)
     label  = label or method.upper()
 
     fig, ax = plt.subplots(figsize=(FIG_W, FIG_H))
@@ -212,27 +231,44 @@ def fig_force_vs_iter(data, method="lbfgs", label=None, outdir=HERE):
 
 
 def fig_comparison(datasets, labels=None, outdir=HERE, outname="energy_comparison.png"):
-    """Overlay energy curves from multiple methods."""
-    fig, ax = plt.subplots(figsize=(FIG_W, FIG_H))
-    methods = list(COLOR.keys())
+    """Overlay energy curves from multiple methods (supports any number of datasets)."""
+    # Colour palette: method-specific first, then distinct fallbacks
+    _METHOD_COLORS = [
+        COLOR.get("lbfgs"), COLOR.get("rfo"), COLOR.get("sd"),
+        "#DB2777", "#0891B2", "#D97706", "#7C3AED", "#059669",
+    ]
+    _LINESTYLES = ["-", "--", "-.", ":"]
+    _MARKERS    = ["o", "s", "^", "D", "v", "P", "X", "*"]
 
+    # Build a deduplicated label list so duplicate methods get a suffix
+    method_count: dict = {}
+    resolved_labels = []
     for i, (data, path) in enumerate(datasets):
         method = _method_from_path(path)
-        color  = COLOR.get(method, f"C{i}")
-        label  = (labels[i] if labels else None) or method.upper()
-        E_rel  = (data["energy"] - data["energy"][-1]) * 1000
-        every  = max(1, len(data["iters"]) // 10)
-        ls     = "-" if i == 0 else "--"
-        mk     = ["o", "s", "^"][i % 3]
+        if labels and i < len(labels):
+            resolved_labels.append(labels[i])
+        else:
+            count = method_count.get(method, 0)
+            method_count[method] = count + 1
+            suffix = f" ({count + 1})" if count > 0 else ""
+            resolved_labels.append(method.upper() + suffix)
+
+    fig, ax = plt.subplots(figsize=(FIG_W, FIG_H))
+
+    for i, (data, path) in enumerate(datasets):
+        E_rel = (data["energy"] - data["energy"].min()) * 1000
+        every = 1 if len(data["iters"]) <= 30 else max(1, len(data["iters"]) // 20)
+        color = _METHOD_COLORS[i % len(_METHOD_COLORS)]
+        ls    = _LINESTYLES[i % len(_LINESTYLES)]
+        mk    = _MARKERS[i % len(_MARKERS)]
         ax.plot(data["iters"], E_rel, color=color, lw=LINEWIDTH,
                 marker=mk, ms=MARKERSIZE, markevery=every,
-                label=label, linestyle=ls)
+                label=resolved_labels[i], linestyle=ls)
 
     ax.set_xlabel("Iteration")
     ax.set_ylabel("ΔE / mEh")
     ax.legend(loc="upper right")
     ax.set_xlim(left=1)
-    ax.set_ylim(bottom=0)
 
     return _savefig(fig, outdir, outname)
 

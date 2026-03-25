@@ -74,6 +74,8 @@
                     <li><a href="opt_lbfgs.html">L-BFGS</a></li>
                     <li><a href="opt_rfo.html" class="active">RFO</a></li>
                     <li><a href="opt_sd.html">SD</a></li>
+                    <li><a href="opt_cg.html">CG</a></li>
+                    <li><a href="opt_sdcg.html">SD/CG</a></li>
                   </ul>
                 </li>
                 <li>
@@ -255,6 +257,23 @@ H       2.96000900     -0.36880600     -1.38891000</code></pre>
           <li><strong>Small to medium-sized molecules:</strong> RFO stores and manipulates the full Hessian matrix, so its memory and computational cost scale quadratically with system size. For very large systems (thousands of atoms), L-BFGS is generally more efficient.</li>
           <li><strong>Pre-optimization before frequency calculations:</strong> When a tight convergence is needed, RFO can be more reliable for the final stages of optimization because its trust-radius approach adapts naturally to the curvature near the minimum.</li>
         </ul>
+
+        <h2 id="convergence">Convergence Behaviour</h2>
+        <p>The figures below show a typical RFO run on the same 22-atom molecule used for the L-BFGS example. The comparison plot (Fig. 3) overlays both methods to illustrate how RFO adapts its step size with the trust-radius mechanism.</p>
+        <div class="figure-row">
+          <figure class="doc-figure">
+            <img src="../../assets/images/opt/rfo/energy_vs_iter_rfo.png" alt="RFO energy vs iteration">
+            <figcaption>Fig. 1 — Energy convergence (RFO)</figcaption>
+          </figure>
+          <figure class="doc-figure">
+            <img src="../../assets/images/opt/rfo/force_vs_iter_rfo.png" alt="RFO force vs iteration">
+            <figcaption>Fig. 2 — Force convergence (RFO)</figcaption>
+          </figure>
+        </div>
+        <figure class="doc-figure" style="max-width:420px;margin:1.75rem auto;">
+          <img src="../../assets/images/opt/shared/energy_comparison.png" alt="L-BFGS vs RFO energy comparison">
+          <figcaption>Fig. 3 — L-BFGS vs RFO energy convergence comparison</figcaption>
+        </figure>
 
         <div class="admonition tip">
           <div class="admonition-title">
