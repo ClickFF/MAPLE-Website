@@ -158,10 +158,10 @@ def _method_from_path(path):
                     return m2.group(1).lower()
     except Exception:
         pass
-    # Fall back to filename (order matters: sdcg before sd/cg)
-    name = os.path.basename(path).lower()
+    # Fall back to path (order matters: sdcg before sd/cg)
+    path_lower = os.path.normpath(path).lower()
     for m in ("lbfgs", "rfo", "sdcg", "sd", "cg"):
-        if m in name:
+        if f"{os.sep}{m}{os.sep}" in path_lower or os.path.basename(path_lower).startswith(f"{m}"):
             return m
     return "opt"
 
@@ -178,10 +178,10 @@ def _savefig(fig, outdir, fname):
 
 
 def fig_energy_vs_iter(data, method="lbfgs", label=None, outdir=HERE):
-    """Energy relative to minimum value (mEh) vs iteration."""
+    """Energy relative to minimum value (Ha) vs iteration."""
     iters  = data["iters"]
     E      = data["energy"]
-    E_rel  = (E - E.min()) * 1000   # mEh, always >= 0 at the global minimum
+    E_rel  = E - E.min()   # Ha, always >= 0 at the global minimum
     color  = COLOR.get(method, COLOR["lbfgs"])
     label  = label or method.upper()
 
@@ -190,8 +190,8 @@ def fig_energy_vs_iter(data, method="lbfgs", label=None, outdir=HERE):
             marker="o", ms=MARKERSIZE,
             label=label, clip_on=False)
     ax.set_xlabel("Iteration")
-    ax.set_ylabel("ΔE / mEh")
-    ax.yaxis.set_major_formatter(ticker.FormatStrFormatter("%.2f"))
+    ax.set_ylabel("ΔE / Ha")
+    ax.yaxis.set_major_formatter(ticker.FormatStrFormatter("%.4f"))
     ax.legend(loc="upper right")
     ax.set_xlim(left=1)
     # No bottom=0 clamp: non-monotonic methods (CG, SD) show true behaviour
@@ -229,7 +229,7 @@ def fig_force_vs_iter(data, method="lbfgs", label=None, outdir=HERE):
 
 
 def fig_comparison(datasets, labels=None, outdir=HERE, outname="energy_comparison.png"):
-    """Overlay energy curves from multiple methods (supports any number of datasets)."""
+    """Overlay relative-energy curves in Ha from multiple methods."""
     # Colour palette: method-specific first, then distinct fallbacks
     _METHOD_COLORS = [
         COLOR.get("lbfgs"), COLOR.get("rfo"), COLOR.get("sd"),
@@ -254,7 +254,7 @@ def fig_comparison(datasets, labels=None, outdir=HERE, outname="energy_compariso
     fig, ax = plt.subplots(figsize=(FIG_W, FIG_H))
 
     for i, (data, path) in enumerate(datasets):
-        E_rel = (data["energy"] - data["energy"].min()) * 1000
+        E_rel = data["energy"] - data["energy"].min()
         color = _METHOD_COLORS[i % len(_METHOD_COLORS)]
         ls    = _LINESTYLES[i % len(_LINESTYLES)]
         mk    = _MARKERS[i % len(_MARKERS)]
@@ -263,7 +263,7 @@ def fig_comparison(datasets, labels=None, outdir=HERE, outname="energy_compariso
                 label=resolved_labels[i], linestyle=ls)
 
     ax.set_xlabel("Iteration")
-    ax.set_ylabel("ΔE / mEh")
+    ax.set_ylabel("ΔE / Ha")
     ax.legend(loc="upper right")
     ax.set_xlim(left=1)
 
