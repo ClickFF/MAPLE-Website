@@ -1,10 +1,12 @@
 import importlib.util
 import unittest
+from pathlib import Path
 
 
+ROOT = Path(__file__).resolve().parents[1]
 spec = importlib.util.spec_from_file_location(
     "plot_opt",
-    "/home/axie/MAPLE/MAPLE-Website/assets/images/opt/tools/plot_opt.py",
+    ROOT / "assets/images/opt/tools/plot_opt.py",
 )
 plot_opt = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(plot_opt)

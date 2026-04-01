@@ -45,39 +45,29 @@
       <h2 id="changelog">Changelog</h2>
 
       <h3 id="v0-1-2">Version 0.1.2 <span class="text-muted">&mdash; April 1, 2026</span></h3>
-      <p>April monthly update with broader MD workflows, improved model support, and merged IRC/debug polish.</p>
+      <p>April monthly update with expanded MD workflows, better model integration, and release-line cleanup.</p>
       <ul>
-        <li><strong>Expanded MD workflows</strong> &mdash; Added experimental NVT/NPT support, GROMACS-style <code>.mdp</code> input, restart/checkpoint handling, DCD trajectory output, and <code>maple md</code> template generation.</li>
-        <li><strong>PBC and restart improvements</strong> &mdash; Tightened periodic workflow handling and made relative-path resolution more consistent for XYZ / XYZTRAJ inputs and restart files.</li>
-        <li><strong>UMA task sizing and MACEPol</strong> &mdash; Added task-aware UMA size selection, broader fallback checkpoint coverage, and MACEPol integration with updated examples.</li>
-        <li><strong>IRC and stability updates</strong> &mdash; Merged IRC-related improvements and debugging cleanup together with parser stabilization and input-handling fixes.</li>
-        <li><strong>CLI and tooling</strong> &mdash; Added <code>--version</code> support and refreshed examples and helper scripts for trajectories and convergence analysis.</li>
+        <li><strong>Expanded MD workflow</strong> &mdash; Added experimental NVT and NPT support with Langevin and V-rescale thermostats, Berendsen and C-rescale barostats, and improved thermodynamic logging.</li>
+        <li><strong>GROMACS-style MDP support</strong> &mdash; MD jobs can now be configured through <code>.mdp</code> files and generated from the CLI with <code>maple md</code>.</li>
+        <li><strong>Restart and trajectory improvements</strong> &mdash; Added <code>rst_file</code>-based restart handling, RNG state persistence, <code>final.xyz</code> export, and binary DCD trajectory output.</li>
+        <li><strong>PBC and file-handling cleanup</strong> &mdash; Improved relative-path handling for XYZ / XYZTRAJ inputs and cleaner restart resolution from output directories.</li>
+        <li><strong>UMA and MACEPol updates</strong> &mdash; Added task-aware UMA sizing, broader fallback checkpoint support, and MACEPol integration with new examples.</li>
+        <li><strong>IRC and debug fixes</strong> &mdash; Merged parser stabilization, inline-coordinate fixes, and general IRC-related cleanup from the enhance branch.</li>
       </ul>
 
-      <h3 id="v2025-3">Version 2025.3 <span class="text-muted">&mdash; September 12, 2025</span></h3>
-      <p>Major release with AutoNEB support and improved convergence behavior.</p>
+      <h3 id="v0-1-1">Version 0.1.1 <span class="text-muted">&mdash; February 7, 2026</span></h3>
+      <p>February monthly update introducing new reaction-path and optimization capabilities.</p>
       <ul>
-        <li><strong>New: AutoNEB method</strong> &mdash; Automatic nudged elastic band with adaptive image insertion for transition state searches. Reduces manual setup for complex reaction paths.</li>
-        <li><strong>Improved convergence</strong> &mdash; Refined step-size control for L-BFGS and RFO optimizers, leading to more robust convergence on flat potential energy surfaces.</li>
-        <li><strong>Growing String Method enhancements</strong> &mdash; Better interpolation for initial path generation and improved reparameterization.</li>
-        <li><strong>Bug fix:</strong> Fixed incorrect thermochemistry corrections when using symmetry-reduced Hessians in frequency calculations.</li>
-        <li><strong>Bug fix:</strong> Resolved memory leak in multi-structure scan calculations that affected long-running jobs.</li>
-        <li><strong>Performance:</strong> Reduced GPU memory footprint for MACE models by approximately 15% through optimized graph construction.</li>
+        <li><strong>AutoNEB</strong> &mdash; Added tree-based automated NEB with adaptive image insertion, branch splitting, and final global MEP refinement.</li>
+        <li><strong>NVE molecular dynamics</strong> &mdash; Introduced Velocity Verlet dynamics in the microcanonical ensemble with Maxwell-Boltzmann initialization and trajectory logging.</li>
+        <li><strong>SDCG optimizer</strong> &mdash; Added phased steepest-descent plus conjugate-gradient optimization with GDIIS acceleration.</li>
+        <li><strong>New IRC integrators</strong> &mdash; Added EulerPC, HPC, and LQA methods in addition to GS. @AmiHaruka</li>
+        <li><strong>Rigid scan mode</strong> &mdash; Added rigid-body scan support with fragment detection from bond connectivity. @AmiHaruka</li>
+        <li><strong>Input and parser improvements</strong> &mdash; Added trajectory single-point workflows, charge/multiplicity inline input, and centralized parameter handling.</li>
       </ul>
 
-      <h3 id="v2025-2">Version 2025.2 <span class="text-muted">&mdash; June 3, 2025</span></h3>
-      <p>Expanded model support and new PES scanning capabilities.</p>
-      <ul>
-        <li><strong>New model: MACE-OMol</strong> &mdash; Added support for the MACE-OMol potential trained on the OMol25 data set for broad organic molecular coverage.</li>
-        <li><strong>New model: EGRET</strong> &mdash; Added support for the EGRET equivariant graph neural network potential.</li>
-        <li><strong>N-dimensional PES scans</strong> &mdash; Extended scan module to support arbitrary N-dimensional relaxed and rigid scans along multiple internal coordinates simultaneously.</li>
-        <li><strong>Dimer method improvements</strong> &mdash; Better initial rotation algorithm and convergence criteria for dimer-based transition state searches.</li>
-        <li><strong>Bug fix:</strong> Corrected coordinate transformation for systems with linear molecular fragments during optimization.</li>
-        <li><strong>Bug fix:</strong> Fixed incorrect energy reporting in scan output when using AIMNet2-NSE with D4 dispersion.</li>
-      </ul>
-
-      <h3 id="v2025-1">Version 2025.1 <span class="text-muted">&mdash; March 15, 2025</span></h3>
-      <p>Initial public release of MAPLE with core computational capabilities.</p>
+      <h3 id="v0-1-0">Version 0.1.0 <span class="text-muted">&mdash; December 31, 2025</span></h3>
+      <p>Initial public release of MAPLE with core computational chemistry capabilities.</p>
       <ul>
         <li><strong>Frequency analysis</strong> &mdash; Normal mode analysis with mass-weighted Hessian diagonalization, RRHO thermochemistry corrections, and IR spectrum generation.</li>
         <li><strong>ML potential support</strong> &mdash; ANI-2x, ANI-1x, ANI-1ccx, ANI-1xnr, AIMNet2, AIMNet2-NSE, MACE-OFF23 (s/m/l), and UMA.</li>
