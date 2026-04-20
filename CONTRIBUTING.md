@@ -33,7 +33,7 @@ The site uses two navigation patterns:
    - 1 level deep (e.g., `functions/`, `tasks/`): `../assets/css/styles.css`
    - 2 levels deep (e.g., `tasks/opt/`): `../../assets/css/styles.css`
 3. Update all navigation `href` and logo `src` paths using the same relative depth pattern.
-4. Add a link to the new page from `documentation.html` or `home1.html`.
+4. Add a link to the new page from the sidebar tree on sibling pages and (for major additions) from `home1.html`.
 
 ## Naming Conventions
 

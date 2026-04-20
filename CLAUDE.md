@@ -23,18 +23,22 @@ No tests, linters, or CI/CD pipelines are configured.
 ### Directory Layout
 
 ```
-index.html + 8 other root pages   Main site pages (top-nav layout)
+index.html + 7 other root pages   Main site pages (top-nav layout)
 assets/css/styles.css              Single shared stylesheet
-assets/images/                     Logo (logo.jpg) and news images (image.png)
+assets/images/                     Logo, platform overview (maple.jpg), news images (image.png)
+tutorials/                         Getting-started flow (installation, quickstart, input_output)
 functions/                         Feature docs (solvent, constrain)
-setup/                             Input file setup docs (settings, coordinates)
+setup/                             Input file setup docs (settings, coordinates, models)
 tasks/                             Task docs by type:
-  singlepoint.html                   (1 level deep)
+  singlepoint.html                   (1 level deep) — also the de-facto tasks hub
+  frequency.html                     (1 level deep)
   opt/                               Optimization methods (2 levels deep)
   ts/                                Transition state methods (2 levels deep)
   scan/                              PES scan methods (2 levels deep)
   irc/                               IRC methods (2 levels deep)
 ```
+
+The top-nav "Documentation" entry points to `tutorials/installation.html` (the tutorial flow); breadcrumb "Tasks" links point to `tasks/singlepoint.html` as the tasks hub.
 
 ### Two Navigation Patterns
 
@@ -57,6 +61,6 @@ All paths are relative. The depth from root determines the prefix:
 
 1. Copy an existing page at the same directory depth
 2. Adjust all `href`/`src` paths for the correct relative depth
-3. Add links from `documentation.html` (doc tree) or `home1.html` (user guide hub)
+3. Add links from the sidebar tree in sibling pages or from `home1.html` (user guide hub)
 4. Lowercase directory and file names with underscores (e.g., `opt_lbfgs.html`)
 5. Use `.html` extension (not `.htm`)
