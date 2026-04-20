@@ -857,6 +857,38 @@ footer {
   line-height: 1.5;
 }
 
+/* "More coming soon" placeholder variant */
+.feature-card.coming-soon {
+  border-style: dashed;
+  background: var(--color-bg-secondary);
+}
+.feature-card.coming-soon h3,
+.feature-card.coming-soon p,
+.feature-card.coming-soon .icon {
+  color: var(--color-text-muted);
+}
+.feature-card.coming-soon:hover {
+  border-color: var(--color-text-border);
+  box-shadow: none;
+}
+
+/* Platform overview figure at bottom of landing page */
+.overview {
+  margin-top: 3rem;
+}
+.overview-figure {
+  margin: 1rem 0 0;
+  text-align: center;
+}
+.overview-figure img {
+  width: 100%;
+  max-width: 1100px;
+  margin: 0 auto;
+  border-radius: 0.5rem;
+  border: 1px solid var(--color-bg-border);
+  background: var(--color-bg-primary);
+}
+
 /* News section on landing page */
 .news-sidebar {
   background: var(--color-bg-secondary);
