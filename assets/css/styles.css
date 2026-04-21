@@ -885,6 +885,16 @@ footer {
   line-height: 1.5;
 }
 
+/* Clickable feature card variant */
+a.feature-card {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+}
+a.feature-card:visited { color: inherit; }
+a.feature-card:hover { text-decoration: none; }
+a.feature-card:hover h3 { color: var(--color-brand-content); }
+
 /* "More coming soon" placeholder variant */
 .feature-card.coming-soon {
   border-style: dashed;
