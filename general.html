@@ -102,93 +102,62 @@
       <p>MAPLE provides a comprehensive suite of computational chemistry methods, all driven by machine learning potentials for fast evaluation on GPU hardware.</p>
 
       <h3 id="task-types">Supported Task Types</h3>
-      <ul>
-        <li><strong><a href="tasks/singlepoint.html">Single Point (sp)</a></strong> &mdash; Compute molecular energies and properties at fixed geometries.</li>
-        <li><strong>Frequency (freq)</strong> &mdash; Normal mode analysis, RRHO thermochemistry, and IR spectra via mass-weighted Hessian diagonalization.</li>
-        <li><strong><a href="tasks/opt/optimization.html">Optimization (opt)</a></strong> &mdash; Locate equilibrium geometries using L-BFGS, RFO, steepest descent, conjugate gradient, DIIS, or bracketing L-BFGS.</li>
-        <li><strong><a href="tasks/ts/ts.html">Transition State (ts)</a></strong> &mdash; Saddle point search via NEB, CI-NEB, P-RFO, Dimer, Growing String, or AutoNEB methods.</li>
-        <li><strong><a href="tasks/scan/scan.html">PES Scan (scan)</a></strong> &mdash; 1D to N-dimensional relaxed or rigid scans along chosen internal coordinates.</li>
-        <li><strong><a href="tasks/irc/irc.html">IRC (irc)</a></strong> &mdash; Intrinsic reaction coordinate with GS, LQA, HPC, and EulerPC integrators.</li>
-      </ul>
-
-      <h3 id="additional-features">Additional Features</h3>
-      <ul>
-        <li><strong><a href="functions/solvent.html">Solvation</a></strong> &mdash; GBSA implicit solvation and explicit solvent models with DFT-D4 dispersion corrections.</li>
-        <li><strong><a href="functions/constrain.html">Constraints</a></strong> &mdash; Fix atoms, bonds, angles, and dihedral angles during optimization and scanning.</li>
-        <li><strong>GPU Acceleration</strong> &mdash; Full CUDA support for ML potential evaluation, providing orders of magnitude speedup over traditional QM methods.</li>
-        <li><strong>D4 Dispersion</strong> &mdash; DFT-D4 dispersion correction available as a global option for any calculation.</li>
-      </ul>
-
-      <h2 id="convergence">Convergence Criteria</h2>
-      <p>MAPLE uses four convergence criteria for geometry optimization and transition state searches. Each criterion can be controlled independently or set via predefined convergence levels.</p>
-
-      <div class="table-wrapper">
-        <table>
-          <thead>
-            <tr>
-              <th>Level</th>
-              <th>f_max (Ha/Bohr)</th>
-              <th>f_rms (Ha/Bohr)</th>
-              <th>dp_max (Bohr)</th>
-              <th>dp_rms (Bohr)</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td><code>superloose</code></td>
-              <td>2.5e-01</td>
-              <td>1.7e-01</td>
-              <td>1.0e+00</td>
-              <td>6.7e-01</td>
-            </tr>
-            <tr>
-              <td><code>extraloose</code></td>
-              <td>2.5e-02</td>
-              <td>1.7e-02</td>
-              <td>1.0e-01</td>
-              <td>6.7e-02</td>
-            </tr>
-            <tr>
-              <td><code>loose</code></td>
-              <td>2.5e-03</td>
-              <td>1.7e-03</td>
-              <td>1.0e-02</td>
-              <td>6.7e-03</td>
-            </tr>
-            <tr>
-              <td><code>medium</code> (default)</td>
-              <td>4.5e-04</td>
-              <td>3.0e-04</td>
-              <td>1.8e-03</td>
-              <td>1.2e-03</td>
-            </tr>
-            <tr>
-              <td><code>tight</code></td>
-              <td>1.5e-05</td>
-              <td>1.0e-05</td>
-              <td>6.0e-05</td>
-              <td>4.0e-05</td>
-            </tr>
-            <tr>
-              <td><code>extratight</code></td>
-              <td>1.5e-06</td>
-              <td>1.0e-06</td>
-              <td>6.0e-06</td>
-              <td>4.0e-06</td>
-            </tr>
-          </tbody>
-        </table>
+      <div class="card-grid">
+        <a class="card" href="tasks/singlepoint.html">
+          <div class="card-tag">sp</div>
+          <h3>Single Point</h3>
+          <p>Compute molecular energies and properties at fixed geometries.</p>
+        </a>
+        <a class="card" href="tasks/frequency.html">
+          <div class="card-tag">freq</div>
+          <h3>Frequency</h3>
+          <p>Normal mode analysis, RRHO thermochemistry, and IR spectra via mass-weighted Hessian diagonalization.</p>
+        </a>
+        <a class="card" href="tasks/opt/optimization.html">
+          <div class="card-tag">opt</div>
+          <h3>Optimization</h3>
+          <p>Locate equilibrium geometries with L-BFGS, RFO, steepest descent, conjugate gradient, DIIS, or bracketing L-BFGS.</p>
+        </a>
+        <a class="card" href="tasks/ts/ts.html">
+          <div class="card-tag">ts</div>
+          <h3>Transition State</h3>
+          <p>Saddle point search via NEB, CI-NEB, P-RFO, Dimer, Growing String, or AutoNEB methods.</p>
+        </a>
+        <a class="card" href="tasks/scan/scan.html">
+          <div class="card-tag">scan</div>
+          <h3>PES Scan</h3>
+          <p>1D to N-dimensional relaxed or rigid scans along chosen internal coordinates.</p>
+        </a>
+        <a class="card" href="tasks/irc/irc.html">
+          <div class="card-tag">irc</div>
+          <h3>IRC</h3>
+          <p>Intrinsic reaction coordinate with GS, LQA, HPC, and EulerPC integrators.</p>
+        </a>
       </div>
 
-      <h2 id="use-cases">Use Cases</h2>
-      <p>MAPLE is well-suited for a variety of computational chemistry workflows:</p>
-      <ul>
-        <li><strong>Conformational analysis</strong> &mdash; Rapid geometry optimization and PES scanning of drug-like molecules using ML potentials.</li>
-        <li><strong>Reaction mechanism exploration</strong> &mdash; Transition state search and IRC calculations to map complete reaction pathways.</li>
-        <li><strong>Thermochemistry</strong> &mdash; Frequency calculations with RRHO corrections for free energy and enthalpy estimates.</li>
-        <li><strong>High-throughput screening</strong> &mdash; GPU-accelerated single point calculations across large molecular libraries.</li>
-        <li><strong>Benchmarking ML potentials</strong> &mdash; Compare results from different ML models (ANI, MACE, AIMNet2, UMA) on the same molecular system using a unified interface.</li>
-      </ul>
+      <h3 id="additional-features">Additional Features</h3>
+      <div class="card-grid">
+        <a class="card" href="functions/solvent.html">
+          <div class="card-tag">Function</div>
+          <h3>Solvation</h3>
+          <p>GBSA implicit solvation and explicit solvent models with DFT-D4 dispersion corrections.</p>
+        </a>
+        <a class="card" href="functions/constrain.html">
+          <div class="card-tag">Function</div>
+          <h3>Constraints</h3>
+          <p>Fix atoms, bonds, angles, and dihedral angles during optimization and scanning.</p>
+        </a>
+        <div class="card">
+          <div class="card-tag">Runtime</div>
+          <h3>GPU Acceleration</h3>
+          <p>Full CUDA support for ML potential evaluation, providing orders of magnitude speedup over traditional QM methods.</p>
+        </div>
+        <a class="card" href="setup/models.html#d4-dispersion">
+          <div class="card-tag">Correction</div>
+          <h3>D4 Dispersion</h3>
+          <p>DFT-D4 dispersion correction available as a global option for any calculation.</p>
+        </a>
+      </div>
     </article>
   </div>
 
